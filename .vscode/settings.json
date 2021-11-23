@@ -1,0 +1,11 @@
+{
+  "editor.formatOnSave": true,
+  "standard.enable": true,
+  "standard.autoFixOnSave": true,
+  "standard.validate": [
+    {
+      "language": "javascript",
+      "autoFix": true
+    }
+  ]
+}

@@ -1,8 +1,12 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-router.get('/', function(req, res) {
-  res.render('products/index');
-});
+const productController = require('../controllers/productCategory')
 
-module.exports = router;
+router.get('/', function (req, res) {
+  res.render('products/index')
+})
+
+router.get('/create-category', productController.createCategory)
+
+module.exports = router
