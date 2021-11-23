@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <%- include("../layout/head"); %>
+</head>
+
+<body>
+  <%- include("../layout/header"); %>
+
+  <div class="product-view">
+    <div class="container">
+      <div class="row gx-0">
+        <div class="col-12 col-lg-6">
+          <div class="featured-image">
+            <div class="featured-image-img" style="background-image: url('/images/product/featured-image.jpg')"></div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="product-info">
+            <h2 class="title">
+              <a>Title</a>
+            </h2>
+
+            <div class="rating">
+              <div class="rating-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <span class="rating-avg">4.5</span>
+              <span class="rating-total">(5 đánh giá)</span>
+              <!-- <span class="rating-total">Chưa có đánh giá</span> -->
+            </div>
+
+            <div class="price">
+              <span class="regular">
+                90.000 VNĐ
+                <span class="percent-discount">
+                  -10%
+                </span>
+              </span>
+              <span class="sale">
+                100.000 VNĐ
+              </span>
+              <!-- <span class="regular">
+                100.000 VNĐ
+              </span> -->
+            </div>
+
+            <p class="description">
+              Ipsum ligula libero. Ultricies integer laoreet felis ut eu. Pharetra nec lorem eu nec dolor. Lacinia tempor blandit
+              eget aliquam consequat vestibulum mollis lacinia aliquam duis suscipit. At mi orci. Faucibus velit sapien viverra
+              suspendisse consectetuer.
+            </p>
+
+            <div class="number-of-product">
+              <label>Số lượng :</label>
+
+              <div class="input-quantity" style="flex: 1;">
+                <a class="input-quantity-action">
+                  <i class="fas fa-minus"></i>
+                </a>
+
+                <div class="input-quantity-value">
+                  <span>
+                    <strong>1 sản phẩm</strong>
+                  </span>
+                </div>
+
+                <a class="input-quantity-action">
+                  <i class="fas fa-plus"></i>
+                </a>
+              </div>
+            </div>
+
+            <button class="btn-daminest primary">
+              <i class="fas fa-shopping-cart" style="margin-right: 8px"></i>Mua ngay
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="properties">
+        <h3 class="properties-heading">
+          Thông tin chi tiết
+          <span></span>
+        </h3>
+
+        <%- include("./property-item", { label: "Thành phần", value: "Yến" }); %>
+        <%- include("./property-item", { label: "Khối lượng", value: "100g" }); %>
+        <%- include("./property-item", { label: "Công dụng", value: "Ipsum ligula libero. Ultricies integer laoreet felis ut eu. Pharetra nec lorem eu nec dolor. Lacinia tempor blandit eget aliquam consequat vestibulum mollis lacinia aliquam duis suscipit. At mi orci." }); %>
+        <%- include("./property-item", { label: "Bảo quản", value: "Trong hộp kín, nơi khô ráo, tránh ánh nắng trực tiếp" }); %>
+        <%- include("./property-item", { label: "Hạn sử dụng", value: "1 năm kể từ ngày sản xuất" }); %>
+        <%- include("./property-item", { label: "Xuất xứ", value: "Việt Nam" }); %>
+
+        <div class="property-item">
+          <label class="property-item-label">Sản phẩm của Công Ty TNHH MTV Yến Sào DaniNest</label>
+          <span class="property-item-value">Địa chỉ : KTX Khu B - ĐHQG HCM, Linh Trung, Thủ Đức, HCM</span>
+          <span class="property-item-value">Hotline : 0777 888 148</span>
+        </div>
+
+        <div class="commitment">
+          <div class="row gx-3">
+            <div class="col-12 col-md-4">
+              <div class="commitment-item">
+                <i class="fas fa-shipping-fast"></i>
+                <span>Miễn phí giao hàng</span>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <div class="commitment-item">
+                <i class="fas fa-award"></i>
+                <span>Đảm bảo chất lượng 100%</span>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <div class="commitment-item">
+                <i class="fas fa-reply"></i>
+                <span>Đổi trả trong vòng 30 ngày</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include("../layout/footer"); %>
+  <%- include("../layout/foot"); %>
+</body>
+
+</html>
