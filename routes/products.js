@@ -2,7 +2,8 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 
-const productController = require('../controllers/productCategory')
+const productCategoryController = require('../controllers/productCategory')
+const productController = require('../controllers/product')
 
 router.get('/', async (req, res) => {
   const products = await productController.getProducts()
@@ -25,8 +26,9 @@ router.get('/:productId', async (req, res, next) => {
   res.render('products/view', { product })
 })
 
-router.get('/init-categories', productController.initCategories)
-router.get('/create-category', productController.createCategory)
+router.get('/init-categories', productCategoryController.initCategories)
+router.get('/create-category', productCategoryController.createCategory)
+
 router.get('/init-products', productController.initProducts)
 router.get('/get-products', productController.getProducts)
 
