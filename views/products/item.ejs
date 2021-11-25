@@ -1,12 +1,12 @@
 <div class="product-item">
-  <a href="#">
+  <a href="/products/<%= product._id %>">
     <div class="featured-image">
       <div class="featured-image-img" style="background-image: url('/images/product/HH11.jpg')"></div>
     </div>
   </a>
 
   <h2 class="title">
-    <a href="/products/view">NT01 - Yến Thô 100G</a>
+    <a href="/products/<%= product._id %>"><%= product.name %></a>
   </h2>
 
   <div class="rating">
@@ -38,8 +38,6 @@
   </div>
 
   <p class="description">
-    Ipsum ligula libero. Ultricies integer laoreet felis ut eu. Pharetra nec lorem eu nec dolor. Lacinia tempor blandit
-    eget aliquam consequat vestibulum mollis lacinia aliquam duis suscipit. At mi orci. Faucibus velit sapien viverra
-    suspendisse consectetuer.
+    <%= product.description %>
   </p>
 </div>

@@ -1,8 +1,11 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-router.get('/', function(req, res, next) {
-  res.render('home/index');
-});
+const productController = require('../controllers/productCategory')
 
-module.exports = router;
+router.get('/', async (req, res, next) => {
+  const products = await productController.getProducts()
+  res.render('home/index', { products })
+})
+
+module.exports = router

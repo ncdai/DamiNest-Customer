@@ -20,7 +20,7 @@
         <div class="col-12 col-lg-6">
           <div class="product-info">
             <h2 class="title">
-              <a>Title</a>
+              <a><%= product.name %></a>
             </h2>
 
             <div class="rating">
@@ -52,9 +52,7 @@
             </div>
 
             <p class="description">
-              Ipsum ligula libero. Ultricies integer laoreet felis ut eu. Pharetra nec lorem eu nec dolor. Lacinia tempor blandit
-              eget aliquam consequat vestibulum mollis lacinia aliquam duis suscipit. At mi orci. Faucibus velit sapien viverra
-              suspendisse consectetuer.
+              <%= product.description %>
             </p>
 
             <div class="number-of-product">
@@ -90,12 +88,12 @@
           <span></span>
         </h3>
 
-        <%- include("./property-item", { label: "Thành phần", value: "Yến" }); %>
-        <%- include("./property-item", { label: "Khối lượng", value: "100g" }); %>
-        <%- include("./property-item", { label: "Công dụng", value: "Ipsum ligula libero. Ultricies integer laoreet felis ut eu. Pharetra nec lorem eu nec dolor. Lacinia tempor blandit eget aliquam consequat vestibulum mollis lacinia aliquam duis suscipit. At mi orci." }); %>
-        <%- include("./property-item", { label: "Bảo quản", value: "Trong hộp kín, nơi khô ráo, tránh ánh nắng trực tiếp" }); %>
-        <%- include("./property-item", { label: "Hạn sử dụng", value: "1 năm kể từ ngày sản xuất" }); %>
-        <%- include("./property-item", { label: "Xuất xứ", value: "Việt Nam" }); %>
+        <%- include("./property-item", { label: "Thành phần", value: product.ingredient }); %>
+        <%- include("./property-item", { label: "Khối lượng", value: product.mass }); %>
+        <%- include("./property-item", { label: "Công dụng", value: product.uses }); %>
+        <%- include("./property-item", { label: "Bảo quản", value: product.preservation }); %>
+        <%- include("./property-item", { label: "Hạn sử dụng", value: product.expiryDate }); %>
+        <%- include("./property-item", { label: "Xuất xứ", value: product.origin }); %>
 
         <div class="property-item">
           <label class="property-item-label">Sản phẩm của Công Ty TNHH MTV Yến Sào DaniNest</label>

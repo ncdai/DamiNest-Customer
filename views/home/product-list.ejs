@@ -3,15 +3,11 @@
     <h2 class="heading">Yến Sào Sạch & Chất Lượng Cao</h2>
 
     <div class="row gx-3">
-      <div class="col-4">
-        <%- include('../products/item'); %>
-      </div>
-      <div class="col-4">
-        <%- include('../products/item'); %>
-      </div>
-      <div class="col-4">
-        <%- include('../products/item'); %>
-      </div>
+      <% products.slice(0, 3).forEach(function(product) { %>
+        <div class="col-12 col-md-4">
+          <%- include('../products/item', { product }); %>
+        </div>
+      <% }); %>
     </div>
 
     <div class="view-more mt-3">
