@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "nodemon ./bin/www",
     "start": "node ./bin/www",
-    "sass:watch": "sass --watch public/scss:public/css --style compressed"
+    "sass:watch": "sass --watch public/scss:public/css --style compressed",
+    "heroku:logs": "heroku logs --tail --app daminest"
   },
   "dependencies": {
     "bootstrap": "^5.1.3",
