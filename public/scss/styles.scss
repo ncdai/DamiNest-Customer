@@ -267,6 +267,10 @@ header.header {
       letter-spacing: 1.6px;
       font-family: $fontFamilySecondary;
       font-size: 16px;
+
+      &.active {
+        color: $primary;
+      }
     }
 
     &.sticky {
@@ -650,6 +654,10 @@ footer.footer {
     line-height: normal;
 
     i {
+      color: #eee;
+    }
+
+    i.active {
       color: #fadb14;
     }
   }
@@ -1020,6 +1028,34 @@ footer.footer {
       span {
         font-weight: $fontMedium;
       }
+    }
+  }
+}
+
+#product-categories {
+  list-style-type: none;
+  padding-bottom: 8px;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  a {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    line-height: normal;
+    background: #f5f5f5;
+    padding: 0 24px;
+    border-radius: 50rem;
+    color: #000;
+    margin-bottom: 8px;
+    margin-right: 16px;
+    font-weight: $fontMedium;
+
+    &.active {
+      background: $secondary;
+      color: $primary;
+      font-weight: $fontMedium;
     }
   }
 }

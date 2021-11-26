@@ -13,7 +13,8 @@
     heading: "Cẩm nang",
     subHeading: null,
     paragraph: "Chia sẻ cách sống khỏe giúp các bạn có thể tham khảo và nắm bắt rõ hơn để có một sức khỏe tuyệt vời",
-    buttonText: "Khám phá ngay"
+    buttonText: "Khám phá ngay",
+    buttonLink: "#post-list"
   }); %>
 
   <div class="clearfix-56"></div>
@@ -33,8 +34,13 @@
   <div class="clearfix-56"></div>
 
   <%- include('../layout/footer'); %>
-
   <%- include('../layout/foot'); %>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#nav-item-handbook').addClass('active');
+    });
+  </script>
 </body>
 
 </html>

@@ -13,7 +13,8 @@
     heading: "Giới thiệu",
     subHeading: null,
     paragraph: "Công Ty TNHH MTV Yến Sào DaniNest với sản phẩm chính là yến sào được hình thành với sứ mệnh đem đến tay người tiêu dùng trên khắp lãnh thổ Việt Nam và bạn bè quốc tế sản phẩm Yến Sào Viêt Nam được đánh giá ngon nhất thế giới do người Việt làm ra",
-    buttonText: "Tìm hiểu thêm"
+    buttonText: "Tìm hiểu thêm",
+    buttonLink: "#about-content"
   }); %>
 
   <div id="about-content">
@@ -38,6 +39,12 @@
   <%- include("../layout/footer"); %>
 
   <%- include("../layout/foot"); %>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#nav-item-about').addClass('active');
+    });
+  </script>
 </body>
 
 </html>

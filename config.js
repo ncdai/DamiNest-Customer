@@ -17,7 +17,8 @@ dotenv.config({
 
 const config = {
   ENV: process.env.NODE_ENV,
-  MONGODB_URL: process.env.MONGODB_URL
+  MONGODB_URL: process.env.MONGODB_URL,
+  PAGE_LIMIT: 6
 }
 
 module.exports = config

@@ -23,33 +23,16 @@
               <a><%= product.name %></a>
             </h2>
 
-            <div class="rating">
-              <div class="rating-stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-              </div>
-              <span class="rating-avg">4.5</span>
-              <span class="rating-total">(5 đánh giá)</span>
-              <!-- <span class="rating-total">Chưa có đánh giá</span> -->
-            </div>
+            <%- include("./components/rating-stars", {
+              totalRatings: product.totalRatings,
+              ratingAvg: product.ratingAvg
+            }); %>
 
-            <div class="price">
-              <span class="regular">
-                90.000 VNĐ
-                <span class="percent-discount">
-                  -10%
-                </span>
-              </span>
-              <span class="sale">
-                100.000 VNĐ
-              </span>
-              <!-- <span class="regular">
-                100.000 VNĐ
-              </span> -->
-            </div>
+            <%- include("./components/price", {
+              currency: product.currency,
+              regularPrice: product.regularPrice,
+              salePrice: product.salePrice
+            }); %>
 
             <p class="description">
               <%= product.description %>
@@ -88,12 +71,12 @@
           <span></span>
         </h3>
 
-        <%- include("./property-item", { label: "Thành phần", value: product.ingredient }); %>
-        <%- include("./property-item", { label: "Khối lượng", value: product.mass }); %>
-        <%- include("./property-item", { label: "Công dụng", value: product.uses }); %>
-        <%- include("./property-item", { label: "Bảo quản", value: product.preservation }); %>
-        <%- include("./property-item", { label: "Hạn sử dụng", value: product.expiryDate }); %>
-        <%- include("./property-item", { label: "Xuất xứ", value: product.origin }); %>
+        <%- include("./components/product-property-item", { label: "Thành phần", value: product.ingredient }); %>
+        <%- include("./components/product-property-item", { label: "Khối lượng", value: product.mass }); %>
+        <%- include("./components/product-property-item", { label: "Công dụng", value: product.uses }); %>
+        <%- include("./components/product-property-item", { label: "Bảo quản", value: product.preservation }); %>
+        <%- include("./components/product-property-item", { label: "Hạn sử dụng", value: product.expiryDate }); %>
+        <%- include("./components/product-property-item", { label: "Xuất xứ", value: product.origin }); %>
 
         <div class="property-item">
           <label class="property-item-label">Sản phẩm của Công Ty TNHH MTV Yến Sào DaniNest</label>

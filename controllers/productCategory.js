@@ -1,4 +1,5 @@
 const ProductCategoryModel = require('../models/productCategory')
+const { PRODUCT_CATEGORIES } = require('../constants/productCategory')
 
 const createCategory = async (req, res) => {
   const newCategory = new ProductCategoryModel({
@@ -10,23 +11,7 @@ const createCategory = async (req, res) => {
 }
 
 const initCategories = async (req, res) => {
-  const data = await ProductCategoryModel.insertMany([
-    {
-      name: 'Chân Tổ Yến'
-    },
-    {
-      name: 'Tổ Yến Sơ Chế'
-    },
-    {
-      name: 'Tổ Yến Thô'
-    },
-    {
-      name: 'Tổ Yến Tinh Chế'
-    },
-    {
-      name: 'Yến Vụn'
-    }
-  ])
+  const data = await ProductCategoryModel.insertMany(PRODUCT_CATEGORIES)
   res.json(data)
 }
 
@@ -35,8 +20,14 @@ const deleteCategories = async (req, res) => {
   res.json(data)
 }
 
+const getCategories = async () => {
+  const categories = ProductCategoryModel.find()
+  return categories
+}
+
 module.exports = {
   createCategory,
   initCategories,
-  deleteCategories
+  deleteCategories,
+  getCategories
 }

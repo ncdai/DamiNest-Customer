@@ -1,13 +1,36 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
+const queryString = require('query-string')
 
 const productCategoryController = require('../controllers/productCategory')
 const productController = require('../controllers/product')
 
 router.get('/', async (req, res) => {
-  const products = await productController.getProducts()
-  res.render('products/index', { products })
+  const { page, categoryId } = req.query
+
+  const [categoriesRes, productsRes] = await Promise.all([
+    productCategoryController.getCategories(),
+    productController.getProducts({ page, categoryId })
+  ])
+
+  const {
+    docs,
+    page: currentPage,
+    totalPages
+  } = productsRes
+
+  res.render('products/index', {
+    categoryId,
+    categories: categoriesRes,
+
+    products: docs,
+    page: currentPage,
+    totalPages,
+
+    queryString,
+    pageUrl: req.originalUrl
+  })
 })
 
 router.get('/:productId', async (req, res, next) => {

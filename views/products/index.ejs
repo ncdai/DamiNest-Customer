@@ -13,24 +13,49 @@
     heading: "Yến Sào Thất Sơn",
     subHeading: null,
     paragraph: "Yến Sào Sạch & Chất Lượng Cao",
-    buttonText: "Xem sản phẩm"
+    buttonText: "Xem sản phẩm",
+    buttonLink: "#product-list"
   }); %>
 
   <div class="clearfix-56"></div>
 
+  <div class="container">
+    <div id="product-categories">
+      <a href="/products" id="category-all">Tất cả</a>
+
+      <% categories.forEach(function(category) { %>
+        <a href="/products?categoryId=<%= category._id %>" id="<%= category._id %>"><%= category.name %></a>
+      <% }); %>
+    </div>
+  </div>
+
   <div id="product-list">
     <div class="container">
-      <div class="row gx-3 gy-3">
-        <% products.forEach(function(product) { %>
-          <div class="col-12 col-md-6">
-            <%- include('../products/item', { product }); %>
-          </div>
-        <% }); %>
-      </div>
+      <% if (products.length > 0) { %>
+        <div class="row gx-3 gy-3">
+          <% products.forEach(function(product) { %>
+            <div class="col-12 col-md-6 col-lg-4">
+              <%- include('../products/components/product-item', { product }); %>
+            </div>
+          <% }); %>
+        </div>
+      <% } else { %>
+        <div class="alert alert-warning mb-0" role="alert">
+          Không tìm thấy sản phẩm!
+        </div>
+      <% } %>
 
-      <div class="clearfix-32"></div>
+      <% if(totalPages > 1) { %>
+        <div class="clearfix-32"></div>
 
-      <%- include('../layout/pagination'); %>
+        <%- include('../layout/pagination', {
+          queryString,
+          url: pageUrl,
+
+          current: page,
+          pages: totalPages,
+        }); %>
+      <% } %>
     </div>
   </div>
 
@@ -38,6 +63,13 @@
 
   <%- include('../layout/footer'); %>
   <%- include('../layout/foot'); %>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#nav-item-products').addClass('active');
+      $('#product-categories #<%= categoryId || "category-all" %>').addClass('active');
+    });
+  </script>
 </body>
 
 </html>

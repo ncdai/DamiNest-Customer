@@ -1,0 +1,26 @@
+<div class="product-item">
+  <a href="/products/<%= product._id %>">
+    <div class="featured-image">
+      <div class="featured-image-img" style="background-image: url('/images/product/HH11.jpg')"></div>
+    </div>
+  </a>
+
+  <h2 class="title">
+    <a href="/products/<%= product._id %>"><%= product.name %></a>
+  </h2>
+
+  <%- include("./rating-stars", {
+    totalRatings: product.totalRatings,
+    ratingAvg: product.ratingAvg
+  }); %>
+
+  <%- include("./price", {
+    currency: product.currency,
+    regularPrice: product.regularPrice,
+    salePrice: product.salePrice
+  }); %>
+
+  <p class="description">
+    <%= product.description %>
+  </p>
+</div>

@@ -14,8 +14,13 @@
   <%- include('./product-list', { products }); %>
 
   <%- include('../layout/footer'); %>
-
   <%- include('../layout/foot'); %>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#nav-item-home').addClass('active');
+    });
+  </script>
 </body>
 
 </html>
