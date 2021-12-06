@@ -1,8 +1,13 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
 
-const userSchema = mongoose.Schema({
+const UserSchema = mongoose.Schema({
   fullName: String,
-  email: String,
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
   password: String,
   avatar: {
     type: String,
@@ -18,10 +23,22 @@ const userSchema = mongoose.Schema({
   },
   role: {
     type: String,
+    enum: ['CUSTOMER', 'ADMIN'],
     default: 'CUSTOMER'
   }
 })
 
-const UserModel = mongoose.model('User', userSchema, 'users')
+UserSchema.pre('save', async function (next) {
+  const hash = await bcrypt.hash(this.password, 10)
+  this.password = hash
+  next()
+})
+
+UserSchema.methods.isValidPassword = async function (password) {
+  const compare = await bcrypt.compare(password, this.password)
+  return compare
+}
+
+const UserModel = mongoose.model('User', UserSchema, 'users')
 
 module.exports = UserModel

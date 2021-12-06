@@ -82,6 +82,28 @@ a:hover {
   height: 56px;
 }
 
+h1.page-heading {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-family: $fontFamilySecondary;
+  font-size: 32px;
+  color: $primary;
+  background-image: linear-gradient(transparent 66%, rgba(0, 0, 0, 0.08) 34%);
+}
+
+#profile {
+  padding: 32px 0;
+
+  .user-info-item {
+    margin-bottom: 0;
+  }
+}
+
+#login-page,
+#register-page {
+  padding: 32px 0;
+}
+
 // Page Hero Unit
 
 .page-hero-unit {
@@ -227,6 +249,10 @@ header.header {
       justify-content: center;
     }
 
+    .right-item + .right-item {
+      margin-left: 8px;
+    }
+
     .circle {
       display: flex;
       width: 40px;
@@ -235,10 +261,6 @@ header.header {
       justify-content: center;
       background: yellow;
       border-radius: 20px;
-
-      + .circle {
-        margin-left: 8px;
-      }
 
       &.auth {
         background-color: $secondary;

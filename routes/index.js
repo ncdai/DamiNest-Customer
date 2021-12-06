@@ -1,11 +1,9 @@
-const express = require('express')
-const router = express.Router()
+const homeRouter = require('./home')
+const authRouter = require('./auth')
+const profileRouter = require('./profile')
 
-const productController = require('../controllers/product')
-
-router.get('/', async (req, res, next) => {
-  const { docs } = await productController.getProducts()
-  res.render('home/index', { products: docs })
-})
-
-module.exports = router
+module.exports = {
+  homeRouter,
+  authRouter,
+  profileRouter
+}

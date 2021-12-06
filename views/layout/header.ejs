@@ -8,13 +8,29 @@
       </div>
 
       <div class="right">
-        <a href="#" class="circle auth">
-          <i class="fas fa-sign-in-alt"></i>
-        </a>
+        <% if (isAuthenticated) { %>
+          <div class="dropdown right-item">
+            <a href="/profile" class="circle auth" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-user-alt"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownUser">
+              <li><a class="dropdown-item" href="/profile">Quản lý tài khoản</a></li>
+              <li><a class="dropdown-item" href="/auth/logout">Đăng xuất</a></li>
+            </ul>
+          </div>
+        <% } else { %>
+          <div class="right-item">
+            <a href="/auth/login" class="circle auth">
+              <i class="fas fa-sign-in-alt"></i>
+            </a>
+          </div>
+        <% } %>
 
-        <a href="#" class="circle cart">
-          <i class="fas fa-shopping-cart"></i>
-        </a>
+        <div class="right-item">
+          <a href="/cart" class="circle cart">
+            <i class="fas fa-shopping-cart"></i>
+          </a>
+        </div>
       </div>
     </div>
 

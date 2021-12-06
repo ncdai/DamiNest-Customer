@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <%- include("../layout/head"); %>
+</head>
+
+<body>
+  <%- include("../layout/header"); %>
+
+  <div class="container">
+    <div id="profile">
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <div class="list-group">
+            <a href="/profile" class="list-group-item list-group-item-action active">Thông tin tài khoản</a>
+            <a href="/profile/update-password" class="list-group-item list-group-item-action">Đổi mật khẩu</a>
+            <a href="/profile/order-history" class="list-group-item list-group-item-action">Lịch sử đặt hàng</a>
+            <a href="/auth/logout" class="list-group-item list-group-item-action">Đăng xuất</a>
+          </div>
+        </div>
+        <div class="col-12 col-md-9">
+          <h1 class="page-heading">Tài khoản</h1>
+            <p class="user-info-item">Họ tên : <%= currentUser.fullName %></p>
+            <p class="user-info-item">Email : <%= currentUser.email %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include("../layout/foot"); %>
+</body>
+
+</html>

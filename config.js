@@ -1,23 +1,11 @@
 const dotenv = require('dotenv')
 
-const getEnvFile = () => {
-  switch (process.env.NODE_ENV) {
-    case 'development':
-      return '.env'
-    case 'production':
-      return '.env.production'
-    default:
-      return '.env'
-  }
-}
-
-dotenv.config({
-  path: getEnvFile()
-})
+dotenv.config()
 
 const config = {
   ENV: process.env.NODE_ENV,
   MONGODB_URL: process.env.MONGODB_URL,
+  SECRET_KEY: process.env.SECRET_KEY,
   PAGE_LIMIT: 6
 }
 

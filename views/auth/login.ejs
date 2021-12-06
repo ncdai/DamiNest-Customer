@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <%- include("../layout/head"); %>
+</head>
+
+<body>
+  <%- include("../layout/header"); %>
+
+  <div class="container">
+    <div id="login-page">
+      <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+          <form action="/auth/login" method="post">
+            <h1 class="page-heading">Đăng nhập</h1>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Email" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Mật khẩu</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" required />
+            </div>
+
+            <div class="d-grid mb-3">
+              <button type="submit" class="btn btn-primary btn-full">Đăng nhập</button>
+            </div>
+
+            <div class="text-center">
+              <p>Bạn chưa có tài khoản? <a href="/auth/register">Đăng ký ngay</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include("../layout/foot"); %>
+</body>
+
+</html>
