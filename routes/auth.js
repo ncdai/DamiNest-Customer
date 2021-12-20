@@ -14,7 +14,8 @@ router.post('/register', passport.authenticate('register', {
 }))
 
 router.get('/login', authMiddleware.isNotAuthenticated, (req, res) => {
-  res.render('auth/login')
+  const loginRes = req.query?.res
+  res.render('auth/login', { loginRes })
 })
 
 router.post('/login', passport.authenticate('login', {
