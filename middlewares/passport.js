@@ -5,11 +5,12 @@ const { UserModel } = require('../models')
 const registerStrategy = new LocalStrategy(
   {
     usernameField: 'email',
-    passwordField: 'password'
+    passwordField: 'password',
+    passReqToCallback: true
   },
-  async (email, password, done) => {
+  async (req, email, password, done) => {
     try {
-      const user = await UserModel.create({ email, password })
+      const user = await UserModel.create({ email, password, fullName: req.body?.fullName })
       return done(null, user)
     } catch (error) {
       done(error)
