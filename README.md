@@ -16,6 +16,7 @@ Create file `.env`
 ```bash
 MONGODB_URL=
 SECRET_KEY=
+PORT=3000
 ```
 
 ## Run

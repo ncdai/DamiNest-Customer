@@ -4,6 +4,7 @@ dotenv.config()
 
 const config = {
   ENV: process.env.NODE_ENV,
+  PORT: process.env.PORT,
   MONGODB_URL: process.env.MONGODB_URL,
   SECRET_KEY: process.env.SECRET_KEY,
   PAGE_LIMIT: 6
