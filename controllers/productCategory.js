@@ -1,4 +1,4 @@
-const ProductCategoryModel = require('../models/productCategory')
+const { ProductCategoryModel } = require('../models')
 const { PRODUCT_CATEGORIES } = require('../constants/productCategory')
 
 const createCategory = async (req, res) => {

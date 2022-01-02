@@ -1,18 +1,9 @@
-const ProductModel = require('../models/product')
-// const ejs = require('ejs')
+const mongoose = require('mongoose')
+const { ProductModel, ProductCategoryModel } = require('../models')
 const config = require('../config')
-const { PRODUCTS } = require('../constants/product')
-
-const initProducts = async (req, res) => {
-  const data = await ProductModel.insertMany(PRODUCTS)
-  res.json(data)
-}
 
 const getProducts = async ({ page, categoryId } = {}) => {
   const query = {}
-
-  // const html = await ejs.renderFile('views/layout/pagination.ejs', { current: 1, pages: 100 })
-  // console.log(html)
 
   if (categoryId) {
     query.categoryId = categoryId
@@ -30,13 +21,49 @@ const getProducts = async ({ page, categoryId } = {}) => {
   return data
 }
 
-const getProductById = async (productId) => {
+const index = async (req, res) => {
+  const { page, categoryId } = req.query
+
+  const [categoriesRes, productsRes] = await Promise.all([
+    ProductCategoryModel.find(),
+    getProducts({ page, categoryId })
+  ])
+
+  const {
+    docs,
+    page: currentPage,
+    totalPages
+  } = productsRes
+
+  res.render('products/index', {
+    categoryId,
+    categories: categoriesRes,
+
+    products: docs,
+    page: currentPage,
+    totalPages,
+
+    pageUrl: req.originalUrl
+  })
+}
+
+const view = async (req, res, next) => {
+  const { productId } = req.params
+
+  const isValid = mongoose.isValidObjectId(productId)
+  if (!isValid) {
+    return next(new Error('Mã sản phẩm không hợp lệ!'))
+  }
+
   const product = await ProductModel.findById(productId)
-  return product
+  if (!product) {
+    return next(new Error('Không tìm thấy sản phẩm!'))
+  }
+
+  res.render('products/view', { product })
 }
 
 module.exports = {
-  initProducts,
-  getProducts,
-  getProductById
+  index,
+  view
 }

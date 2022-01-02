@@ -9,8 +9,7 @@ const connectDatabase = async () => {
     })
     console.log('Mongoose is connected')
   } catch (error) {
-    console.log('Mongoose is encountered an error')
-    console.log(error)
+    console.error('Mongoose is encountered an error', error.message)
   }
 }
 

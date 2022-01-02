@@ -1,31 +1,15 @@
 const express = require('express')
 const router = express.Router()
-const passport = require('passport')
 
 const { authMiddleware } = require('../middlewares')
+const { authController } = require('../controllers')
 
-router.get('/register', authMiddleware.isNotAuthenticated, (req, res) => {
-  res.render('auth/register')
-})
+router.get('/register', authMiddleware.notRequiredLogin, authController.getRegister)
+router.post('/register', authMiddleware.notRequiredLogin, authController.postRegister)
 
-router.post('/register', passport.authenticate('register', {
-  successRedirect: '/profile',
-  failureRedirect: '/auth/register?res=FAILED'
-}))
+router.get('/login', authMiddleware.notRequiredLogin, authController.getLogin)
+router.post('/login', authMiddleware.notRequiredLogin, authController.postLogin)
 
-router.get('/login', authMiddleware.isNotAuthenticated, (req, res) => {
-  const loginRes = req.query?.res
-  res.render('auth/login', { loginRes })
-})
-
-router.post('/login', passport.authenticate('login', {
-  failureRedirect: '/auth/login?res=FAILED',
-  successRedirect: '/profile'
-}))
-
-router.get('/logout', authMiddleware.isAuthenticated, (req, res) => {
-  req.logOut()
-  res.redirect('/auth/login')
-})
+router.get('/logout', authMiddleware.requiredLogin, authController.getLogout)
 
 module.exports = router

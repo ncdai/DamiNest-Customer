@@ -7,37 +7,25 @@ const logger = require('morgan')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const mongoose = require('mongoose')
-
-const { passportMiddleware, authMiddleware } = require('./middlewares')
-const { databaseUtils } = require('./utils')
+const queryString = require('query-string')
 const config = require('./config')
 
-const aboutRouter = require('./routes/about')
-const productsRouter = require('./routes/products')
-const handbookRouter = require('./routes/handbook')
-const usersRouter = require('./routes/users')
-const { profileRouter, homeRouter, authRouter } = require('./routes')
+const { passportMiddleware, authMiddleware } = require('./middlewares')
+const { databaseUtil } = require('./utils')
+
+const {
+  aboutRouter,
+  authRouter,
+  handbookRouter,
+  homeRouter,
+  productsRouter,
+  profileRouter
+} = require('./routes')
 
 const app = express()
 
 // connect to MongoDB
-databaseUtils.connectDatabase()
-// mongoose.connect(
-//   config.MONGODB_URL,
-//   {
-//     useNewUrlParser: true
-//   }
-// )
-// mongoose.connection.on('connected', function () {
-//   console.log('Mongoose is connected')
-// })
-// mongoose.connection.on('disconnected', function () {
-//   console.log('Mongoose is disconnected')
-// })
-// mongoose.connection.on('error', function (error) {
-//   console.log('Mongoose is encountered an error')
-//   console.log(error)
-// })
+databaseUtil.connectDatabase()
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -71,29 +59,28 @@ app.use(session({
 passportMiddleware.applyPassportMiddleware(passport)
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(passportMiddleware.injectLocals())
 
-app.use(function (req, res, next) {
-  res.locals.currentUser = req.user
-  res.locals.isAuthenticated = req.isAuthenticated()
+app.use((req, res, next) => {
+  res.locals.queryString = queryString
   next()
 })
 
 // routes
-app.use('/', homeRouter)
+app.use('/auth', authRouter)
+app.use('/profile', authMiddleware.requiredLogin, profileRouter)
 app.use('/about', aboutRouter)
 app.use('/products', productsRouter)
 app.use('/handbook', handbookRouter)
-app.use('/users', usersRouter)
-app.use('/profile', authMiddleware.isAuthenticated, profileRouter)
-app.use('/auth', authRouter)
+app.use('/', homeRouter)
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   next(createError(404))
 })
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}

@@ -1,4 +1,4 @@
-const isAuthenticated = (req, res, next) => {
+const requiredLogin = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next()
   }
@@ -6,7 +6,7 @@ const isAuthenticated = (req, res, next) => {
   res.redirect('/auth/login')
 }
 
-const isNotAuthenticated = (req, res, next) => {
+const notRequiredLogin = (req, res, next) => {
   if (req.isAuthenticated()) {
     return res.redirect('/')
   }
@@ -15,6 +15,6 @@ const isNotAuthenticated = (req, res, next) => {
 }
 
 module.exports = {
-  isAuthenticated,
-  isNotAuthenticated
+  requiredLogin,
+  notRequiredLogin
 }
