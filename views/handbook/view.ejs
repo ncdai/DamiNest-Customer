@@ -2,13 +2,15 @@
 <html lang="vi">
 
 <head>
-  <%- include('../layout/head'); %>
+  <%- include(layouts + '/head'); %>
+
+  <link rel="stylesheet" href="/css/handbook/view.css">
 </head>
 
-<body>
-  <%- include('../layout/header'); %>
+<body id="handbook-view-page">
+  <%- include(layouts + '/header'); %>
 
-  <div class="post-view">
+  <main>
     <div class="container">
       <h1>Cách ăn yến sào tốt cho sức khỏe</h1>
     </div>
@@ -106,13 +108,18 @@
         </div>
       </div>
     </div>
-  </div>
+  </main>
 
   <div class="clearfix-56"></div>
 
-  <%- include('../layout/footer'); %>
+  <%- include(layouts + '/footer'); %>
+  <%- include(layouts + '/foot'); %>
 
-  <%- include('../layout/foot'); %>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#nav-item-handbook').addClass('active');
+    });
+  </script>
 </body>
 
 </html>

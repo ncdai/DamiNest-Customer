@@ -2,42 +2,42 @@
 <html lang="vi">
 
 <head>
-  <%- include('../layout/head'); %>
+  <%- include(layouts + '/head'); %>
 </head>
 
-<body>
-  <%- include('../layout/header'); %>
+<body id="handbook-page">
+  <%- include(layouts + '/header'); %>
 
-  <%- include('../layout/page-hero-unit', {
+  <%- include(layouts + '/page-hero-unit', {
     featuredImage: "/images/handbook/hero-unit.jpg",
     heading: "Cẩm nang",
     subHeading: null,
     paragraph: "Chia sẻ cách sống khỏe giúp các bạn có thể tham khảo và nắm bắt rõ hơn để có một sức khỏe tuyệt vời",
     buttonText: "Khám phá ngay",
-    buttonLink: "#post-list"
+    buttonLink: "#main"
   }); %>
 
-  <div class="clearfix-56"></div>
-
-  <div id='post-list'>
+  <main id="main">
     <div class="container">
+      <div class="clearfix-56"></div>
+
       <div class="row gx-3 gy-3">
         <% for(var i = 1; i <= 6; ++i) { %>
           <div class="col-12 col-md-4">
-            <%- include('../handbook/item'); %>
+            <%- include('./components/post-item'); %>
           </div>
         <% }; %>
       </div>
+
+      <div class="clearfix-56"></div>
     </div>
-  </div>
+  </main>
 
-  <div class="clearfix-56"></div>
-
-  <%- include('../layout/footer'); %>
-  <%- include('../layout/foot'); %>
+  <%- include(layouts + '/footer'); %>
+  <%- include(layouts + '/foot'); %>
 
   <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('#nav-item-handbook').addClass('active');
     });
   </script>

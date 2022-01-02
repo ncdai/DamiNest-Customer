@@ -2,35 +2,35 @@
 <html lang="vi">
 
 <head>
-  <%- include('../layout/head'); %>
+  <%- include(layouts + '/head'); %>
+
+  <link rel="stylesheet" href="/css/products/index.css">
 </head>
 
 <body>
-  <%- include('../layout/header'); %>
+  <%- include(layouts + '/header'); %>
 
-  <%- include('../layout/page-hero-unit', {
+  <%- include(layouts + '/page-hero-unit', {
     featuredImage: "/images/product/hero-unit.jpg",
     heading: "Yến Sào Thất Sơn",
     subHeading: null,
     paragraph: "Yến Sào Sạch & Chất Lượng Cao",
     buttonText: "Xem sản phẩm",
-    buttonLink: "#product-list"
+    buttonLink: "#main"
   }); %>
 
-  <div class="clearfix-56"></div>
-
-  <div class="container">
-    <div id="product-categories">
-      <a href="/products" id="category-all">Tất cả</a>
-
-      <% categories.forEach(function(category) { %>
-        <a href="/products?categoryId=<%= category._id %>" id="<%= category._id %>"><%= category.name %></a>
-      <% }); %>
-    </div>
-  </div>
-
-  <div id="product-list">
+  <main id="main">
     <div class="container">
+      <div class="product-categories" id="categories">
+        <a href="/products" id="category-all">Tất cả</a>
+
+        <% categories.forEach(function(category) { %>
+          <a href="/products?categoryId=<%= category._id %>" id="<%= category._id %>"><%= category.name %></a>
+        <% }); %>
+      </div>
+
+      <!-- <div class="clearfix-"></div> -->
+
       <% if (products.length > 0) { %>
         <div class="row gx-3 gy-3">
           <% products.forEach(function(product) { %>
@@ -48,26 +48,24 @@
       <% if(totalPages > 1) { %>
         <div class="clearfix-32"></div>
 
-        <%- include('../layout/pagination', {
-          queryString,
+        <%- include(layouts + '/pagination', {
           url: pageUrl,
-
           current: page,
           pages: totalPages,
         }); %>
       <% } %>
+
+      <div class="clearfix-56"></div>
     </div>
-  </div>
+  </main>
 
-  <div class="clearfix-56"></div>
-
-  <%- include('../layout/footer'); %>
-  <%- include('../layout/foot'); %>
+  <%- include(layouts + '/footer'); %>
+  <%- include(layouts + '/foot'); %>
 
   <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('#nav-item-products').addClass('active');
-      $('#product-categories #<%= categoryId || "category-all" %>').addClass('active');
+      $('#categories #<%= categoryId || "category-all" %>').addClass('active');
     });
   </script>
 </body>

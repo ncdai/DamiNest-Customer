@@ -68,6 +68,7 @@ const applyPassportMiddleware = (passport) => {
 const injectLocals = () => (req, res, next) => {
   res.locals.currentUser = req.user
   res.locals.isAuthenticated = req.isAuthenticated()
+  next()
 }
 
 module.exports = {

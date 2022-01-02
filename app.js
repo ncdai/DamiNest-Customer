@@ -9,6 +9,7 @@ const MongoStore = require('connect-mongo')(session)
 const mongoose = require('mongoose')
 const queryString = require('query-string')
 const config = require('./config')
+const appLocals = require('./app.locals')
 
 const { passportMiddleware, authMiddleware } = require('./middlewares')
 const { databaseUtil } = require('./utils')
@@ -23,6 +24,8 @@ const {
 } = require('./routes')
 
 const app = express()
+
+app.locals = appLocals
 
 // connect to MongoDB
 databaseUtil.connectDatabase()
@@ -87,7 +90,7 @@ app.use((err, req, res, next) => {
 
   // render the error page
   res.status(err.status || 500)
-  res.render('error')
+  res.render('error/index')
 })
 
 module.exports = app

@@ -2,22 +2,24 @@
 <html lang="vi">
 
 <head>
-  <%- include('../layout/head'); %>
+  <%- include(layouts + '/head'); %>
+
+  <link rel="stylesheet" href="/css/home/index.css">
 </head>
 
-<body>
-  <%- include('../layout/header'); %>
+<body id="home-page">
+  <%- include(layouts + '/header'); %>
 
-  <%- include('./hero-unit'); %>
-  <%- include('./intro-1'); %>
-  <%- include('./intro-2'); %>
-  <%- include('./product-list', { products }); %>
+  <%- include(views + '/home/components/hero-unit'); %>
+  <%- include(views + '/home/components/intro-1'); %>
+  <%- include(views + '/home/components/intro-2'); %>
+  <%- include(views + '/home/components/products', { products }); %>
 
-  <%- include('../layout/footer'); %>
-  <%- include('../layout/foot'); %>
+  <%- include(layouts + '/footer'); %>
+  <%- include(layouts + '/foot'); %>
 
   <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('#nav-item-home').addClass('active');
     });
   </script>

@@ -2,24 +2,25 @@
 <html lang="vi">
 
 <head>
-  <%- include("../layout/head"); %>
+  <%- include(layouts + '/head'); %>
 </head>
 
-<body>
-  <%- include("../layout/header"); %>
+<body id="about-page">
+  <%- include(layouts + '/header'); %>
 
-  <%- include("../layout/page-hero-unit", {
+  <%- include(layouts + "/page-hero-unit", {
     featuredImage: "/images/about/hero-unit.jpg",
     heading: "Giới thiệu",
     subHeading: null,
     paragraph: "Công Ty TNHH MTV Yến Sào DaniNest với sản phẩm chính là yến sào được hình thành với sứ mệnh đem đến tay người tiêu dùng trên khắp lãnh thổ Việt Nam và bạn bè quốc tế sản phẩm Yến Sào Viêt Nam được đánh giá ngon nhất thế giới do người Việt làm ra",
     buttonText: "Tìm hiểu thêm",
-    buttonLink: "#about-content"
+    buttonLink: "#main"
   }); %>
 
-  <div id="about-content">
-    <div class="clearfix-56"></div>
+  <main id="main">
     <div class="container">
+      <div class="clearfix-56"></div>
+
       <div class="friendly-for-reading">
         <h2>Sứ mệnh</h2>
         <p>Từ những đặc tính quý giá của yến sào mà thiên nhiên ban tặng, Công Ty TNHH MTV Yến Sào DaniNest với sản phẩm chính là yến sào được hình thành với sứ mệnh đem đến tay người tiêu dùng trên khắp lãnh thổ Việt Nam và bạn bè quốc tế sản phẩm Yến Sào Viêt Nam được đánh giá ngon nhất thế giới do người Việt làm ra.</p>
@@ -32,13 +33,13 @@
         <h2>Cam kết</h2>
         <p>Với phương châm chất lượng là tiên quyết nên chính sách bán hàng của Công ty là cam kết tiền 300% cho khách hàng nếu chứng minh trong sản phẩm của Công ty có hàng giả.</p>
       </div>
+
+      <div class="clearfix-56"></div>
     </div>
-    <div class="clearfix-56"></div>
-  </div>
+  </main>
 
-  <%- include("../layout/footer"); %>
-
-  <%- include("../layout/foot"); %>
+  <%- include(layouts + '/footer'); %>
+  <%- include(layouts + '/foot'); %>
 
   <script type="text/javascript">
     $(document).ready(function() {

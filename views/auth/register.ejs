@@ -2,14 +2,16 @@
 <html lang="vi">
 
 <head>
-  <%- include("../layout/head"); %>
+  <%- include(layouts + '/head'); %>
 </head>
 
-<body>
-  <%- include("../layout/header"); %>
+<body id="register-page">
+  <%- include(layouts + '/header'); %>
 
-  <div class="container">
-    <div id="register-page">
+  <main>
+    <div class="container">
+      <div class="clearfix-32"></div>
+
       <div class="row">
         <div class="col-12 col-md-6 offset-md-3">
           <form action="/auth/register" method="post">
@@ -41,9 +43,9 @@
         </div>
       </div>
     </div>
-  </div>
+  </main>
 
-  <%- include("../layout/foot"); %>
+  <%- include(layouts + '/foot'); %>
 </body>
 
 </html>

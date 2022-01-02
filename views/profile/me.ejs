@@ -2,14 +2,16 @@
 <html lang="vi">
 
 <head>
-  <%- include("../layout/head"); %>
+  <%- include(layouts + '/head'); %>
+
+  <link rel="stylesheet" href="/css/profile/index.css">
 </head>
 
-<body>
-  <%- include("../layout/header"); %>
+<body id="profile-page">
+  <%- include(layouts + '/header'); %>
 
-  <div class="container">
-    <div id="profile">
+  <main>
+    <div class="container">
       <div class="row">
         <div class="col-12 col-md-3">
           <div class="list-group">
@@ -26,9 +28,9 @@
         </div>
       </div>
     </div>
-  </div>
+  </main>
 
-  <%- include("../layout/foot"); %>
+  <%- include(layouts + '/foot'); %>
 </body>
 
 </html>

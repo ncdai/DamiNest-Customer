@@ -2,13 +2,15 @@
 <html lang="vi">
 
 <head>
-  <%- include("../layout/head"); %>
+  <%- include(layouts + '/head'); %>
+
+  <link rel="stylesheet" href="/css/products/view.css">
 </head>
 
-<body>
-  <%- include("../layout/header"); %>
+<body id="product-view-page">
+  <%- include(layouts + '/header'); %>
 
-  <div class="product-view">
+  <main>
     <div class="container">
       <div class="row gx-0">
         <div class="col-12 col-lg-6">
@@ -23,12 +25,12 @@
               <a><%= product.name %></a>
             </h2>
 
-            <%- include("./components/rating-stars", {
+            <%- include(views + "/products/components/rating-stars", {
               totalRatings: product.totalRatings,
               ratingAvg: product.ratingAvg
             }); %>
 
-            <%- include("./components/price", {
+            <%- include(views + "/products/components/price", {
               currency: product.currency,
               regularPrice: product.regularPrice,
               salePrice: product.salePrice
@@ -71,12 +73,12 @@
           <span></span>
         </h3>
 
-        <%- include("./components/product-property-item", { label: "Thành phần", value: product.ingredient }); %>
-        <%- include("./components/product-property-item", { label: "Khối lượng", value: product.mass }); %>
-        <%- include("./components/product-property-item", { label: "Công dụng", value: product.uses }); %>
-        <%- include("./components/product-property-item", { label: "Bảo quản", value: product.preservation }); %>
-        <%- include("./components/product-property-item", { label: "Hạn sử dụng", value: product.expiryDate }); %>
-        <%- include("./components/product-property-item", { label: "Xuất xứ", value: product.origin }); %>
+        <%- include(views + "/products/components/product-property-item", { label: "Thành phần", value: product.ingredient }); %>
+        <%- include(views + "/products/components/product-property-item", { label: "Khối lượng", value: product.mass }); %>
+        <%- include(views + "/products/components/product-property-item", { label: "Công dụng", value: product.uses }); %>
+        <%- include(views + "/products/components/product-property-item", { label: "Bảo quản", value: product.preservation }); %>
+        <%- include(views + "/products/components/product-property-item", { label: "Hạn sử dụng", value: product.expiryDate }); %>
+        <%- include(views + "/products/components/product-property-item", { label: "Xuất xứ", value: product.origin }); %>
 
         <div class="property-item">
           <label class="property-item-label">Sản phẩm của Công Ty TNHH MTV Yến Sào DaniNest</label>
@@ -110,10 +112,16 @@
         </div>
       </div>
     </div>
-  </div>
+  </main>
 
-  <%- include("../layout/footer"); %>
-  <%- include("../layout/foot"); %>
+  <%- include(layouts + '/footer'); %>
+  <%- include(layouts + '/foot'); %>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#nav-item-products').addClass('active');
+    });
+  </script>
 </body>
 
 </html>

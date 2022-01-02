@@ -1,17 +1,17 @@
-<div class="home-product-list">
+<section class="home-products" id="products">
   <div class="container">
     <h2 class="heading">Yến Sào Sạch & Chất Lượng Cao</h2>
 
     <div class="row gx-3">
       <% products.slice(0, 3).forEach(function(product) { %>
         <div class="col-12 col-md-4">
-          <%- include('../products/components/product-item', { product }); %>
+          <%- include(views + '/products/components/product-item', { product }); %>
         </div>
       <% }); %>
     </div>
 
     <div class="view-more mt-3">
-      <a class="btn-daminest secondary large block">Xem tất cả sản phẩm</a>
+      <a href="/products" class="btn-daminest secondary large block">Xem tất cả sản phẩm</a>
     </div>
   </div>
-</div>
+</section>
