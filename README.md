@@ -35,6 +35,10 @@ yarn sass:watch
 ```bash
 # start node project
 yarn start
+
+# or
+yarn global add pm2
+yarn pm2:start
 ```
 
 ## VS Code Config

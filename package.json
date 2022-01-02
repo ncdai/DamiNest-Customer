@@ -6,7 +6,10 @@
     "dev": "nodemon ./bin/www",
     "start": "node ./bin/www",
     "sass:watch": "sass --watch public/scss:public/css --style compressed",
-    "heroku:logs": "heroku logs --tail --app daminest"
+    "heroku:logs": "heroku logs --tail --app daminest",
+    "pm2:start": "pm2 start ./ecosystem.config.js --env production ; pm2 status",
+    "pm2:reload": "pm2 reload ./ecosystem.config.js --env production ; pm2 status",
+    "pm2:stop": "pm2 stop ./ecosystem.config.js --env production ; pm2 status"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
