@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <%- include(layouts + '/head'); %>
+</head>
+
+<body id="cart-page">
+  <%- include(layouts + '/header'); %>
+
+  <main>
+    <div class="container">
+      <div class="clearfix-56"></div>
+
+      <h1>Cart</h1>
+
+      <div id="cart-items">
+      </div>
+
+      <div id="total-price"></div>
+
+      <div class="clearfix-56"></div>
+    </div>
+  </main>
+
+  <%- include(layouts + '/foot'); %>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      function renderCartItems (items) {
+        $('#cart-items').html(items.map((item) => {
+          return `
+            <div>
+              <a>${item.name}</a>
+              <button onClick="cartLS.quantity('${item.id}', -1)">-</button>
+              <span>${item.quantity}</span>
+              <button onClick="cartLS.quantity('${item.id}', 1)">+</button>
+              <button onClick="cartLS.remove('${item.id}')">x</button>
+            </div>
+          `;
+        }));
+      }
+
+      function updateTotalPrice () {
+        $('#total-price').html(cartLS.total());
+      }
+
+      cartLS.onChange(function (items) {
+        renderCartItems(items);
+        updateTotalPrice();
+      });
+
+      renderCartItems(cartLS.list());
+      updateTotalPrice();
+    });
+  </script>
+</body>
+
+</html>

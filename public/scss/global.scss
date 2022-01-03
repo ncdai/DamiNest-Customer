@@ -248,6 +248,7 @@ h1.page-heading {
       }
 
       &.cart {
+        position: relative;
         background-color: $primary;
         color: $secondary;
 
@@ -573,6 +574,18 @@ footer.footer {
     height: 2.5rem;
     line-height: normal;
 
+    input {
+      height: 1.5rem;
+      width: 3rem;
+      margin-right: 0.5rem;
+      border: 1px solid #eee;
+      border-radius: 0.25rem;
+
+      &:focus {
+        outline-color: $primary;
+      }
+    }
+
     span {
       color: #000;
       display: block;
@@ -732,4 +745,36 @@ footer.footer {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+}
+
+#cart-badge {
+  position: absolute;
+  right: -0.75rem;
+  top: -0.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 1.5rem;
+  height: 1.5rem;
+
+  border-radius: 50rem;
+  border: 2px solid #fff;
+
+  font-size: 0.875rem;
+  background-color: #ef4444;
+  color: #fff;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input.hide-spin-button::-webkit-outer-spin-button,
+input.hide-spin-button::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input.hide-spin-button[type="number"] {
+  -moz-appearance: textfield;
 }

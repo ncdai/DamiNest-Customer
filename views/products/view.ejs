@@ -44,24 +44,24 @@
               <label>Số lượng :</label>
 
               <div class="input-quantity" style="flex: 1;">
-                <a class="input-quantity-action">
+                <a class="input-quantity-action" id="dec-quantity">
                   <i class="fas fa-minus"></i>
                 </a>
 
                 <div class="input-quantity-value">
                   <span>
-                    <strong>1 sản phẩm</strong>
+                    <input type="number" id="quantity" value="1" class="text-center hide-spin-button"><strong>sản phẩm</strong>
                   </span>
                 </div>
 
-                <a class="input-quantity-action">
+                <a class="input-quantity-action" id="inc-quantity">
                   <i class="fas fa-plus"></i>
                 </a>
               </div>
             </div>
 
-            <button class="btn-daminest primary">
-              <i class="fas fa-shopping-cart" style="margin-right: 8px"></i>Mua ngay
+            <button class="btn-daminest primary" id="btn-add-to-cart">
+              <i class="fas fa-shopping-cart" style="margin-right: 8px"></i>Thêm vào giỏ hàng
             </button>
           </div>
         </div>
@@ -119,7 +119,45 @@
 
   <script type="text/javascript">
     $(document).ready(function () {
+      const MIN_QUANTITY = 1;
+      const MAX_QUANTITY = 10;
+
+      function getQuantity () {
+        return parseInt($('#quantity').val());
+      }
+
+      function updateQuantity (value) {
+        const current = getQuantity();
+        if ((value < 0 && current > MIN_QUANTITY) || (value > 0 && current < MAX_QUANTITY)) {
+          $('#quantity').val(current + value);
+        }
+      }
+
       $('#nav-item-products').addClass('active');
+
+      $('#inc-quantity').on('click', function () {
+        updateQuantity(1);
+      });
+
+      $('#dec-quantity').on('click', function () {
+        updateQuantity(-1);
+      });
+
+      $('#btn-add-to-cart').on('click', function () {
+        toastr.success("Đã thêm vào giỏ hàng");
+
+        const quantity = getQuantity();
+
+        cartLS.add({
+          id: '<%= product._id %>',
+          name: '<%= product.name %>',
+          price: parseInt('<%= product.salePrice > 0 ? product.salePrice : product.regularPrice %>')
+        }, quantity);
+      });
+
+      cartLS.onChange(function (items) {
+        updateCartBadge();
+      });
     });
   </script>
 </body>

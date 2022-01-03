@@ -1,13 +1,7 @@
-// $(document).ready(function () {
-//   $(window).scroll(function () {
-//     const top = $(window).scrollTop()
-//     if (top > 88) {
-//       $('header .nav').addClass('sticky')
-//     } else {
-//       $('header .nav').removeClass('sticky')
-//     }
-//   })
-// })
+function updateCartBadge () {
+  const total = cartLS.list().length;
+  $('#cart-badge').html(total);
+}
 
 $(document).ready(function () {
   // Add smooth scrolling to all links
@@ -29,4 +23,6 @@ $(document).ready(function () {
       });
     }
   });
+
+  updateCartBadge();
 });

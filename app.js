@@ -20,7 +20,8 @@ const {
   handbookRouter,
   homeRouter,
   productsRouter,
-  profileRouter
+  profileRouter,
+  cartRouter
 } = require('./routes')
 
 const app = express()
@@ -75,6 +76,7 @@ app.use('/profile', authMiddleware.requiredLogin, profileRouter)
 app.use('/about', aboutRouter)
 app.use('/products', productsRouter)
 app.use('/handbook', handbookRouter)
+app.use('/cart', cartRouter)
 app.use('/', homeRouter)
 
 // catch 404 and forward to error handler
