@@ -31,7 +31,22 @@ const UserSchema = mongoose.Schema({
     type: String,
     enum: ['CUSTOMER', 'ADMIN'],
     default: 'CUSTOMER'
-  }
+  },
+
+  cart: [{
+    productId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true
+    },
+    quantity: {
+      type: Number,
+      required: true,
+      default: 1
+    }
+  }]
+}, {
+  timestamps: true
 })
 
 UserSchema.pre('save', async function (next) {

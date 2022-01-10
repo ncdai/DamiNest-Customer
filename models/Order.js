@@ -24,9 +24,9 @@ const OrderSchema = mongoose.Schema({
   productList: [{
     productId: String,
     title: String,
+    featuredImage: String,
     price: Number,
     discount: Number,
-    featuredImage: String,
     quantity: Number,
     total: Number
   }],
