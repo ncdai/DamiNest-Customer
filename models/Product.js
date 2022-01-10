@@ -31,11 +31,12 @@ const productSchema = mongoose.Schema({
     type: Number,
     default: 0
   },
-  regularPrice: {
+  price: {
     type: Number,
-    default: 0
+    default: 0,
+    required: true
   },
-  salePrice: {
+  discount: {
     type: Number,
     default: 0
   },
@@ -62,10 +63,6 @@ const productSchema = mongoose.Schema({
   origin: {
     type: String,
     default: ''
-  },
-  currency: {
-    type: String,
-    default: 'VND'
   },
   ownerId: {
     type: mongoose.Schema.Types.ObjectId,

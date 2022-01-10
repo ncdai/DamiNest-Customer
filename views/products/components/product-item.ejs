@@ -15,9 +15,8 @@
   }); %>
 
   <%- include("./price", {
-    currency: product.currency,
-    regularPrice: product.regularPrice,
-    salePrice: product.salePrice
+    price: product.price,
+    discount: product.discount
   }); %>
 
   <p class="description">

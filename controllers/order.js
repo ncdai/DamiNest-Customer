@@ -25,10 +25,11 @@ const createOrder = async (req, res, next) => {
       return {
         productId: String(product._id),
         title: product.title,
-        price: product.regularPrice,
         featuredImage: product.featuredImage,
+        price: product.price,
+        discount: product.discount,
         quantity: p.quantity,
-        total: product.regularPrice * p.quantity
+        total: (product.price - product.discount) * p.quantity
       }
     }).filter((p) => !!p)
 
@@ -43,9 +44,10 @@ const createOrder = async (req, res, next) => {
       total: total,
       status: 'PENDING'
     })
-    // const saved = await order.save()
 
-    res.json(order)
+    const newOrder = await order.save()
+
+    res.json(newOrder)
   } catch (error) {
     next(error)
   }

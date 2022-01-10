@@ -1,25 +1,25 @@
 <%
   const currencyFormatter = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
-    currency: currency,
+    currency: 'VND',
   });
 %>
 
 <div class="price">
-  <% if (salePrice > 0) { %>
+  <% if (discount > 0) { %>
     <span class="regular">
-      <%= currencyFormatter.format(salePrice) %>
+      <%= currencyFormatter.format(price - discount) %>
       <span class="percent-discount">
-        -<%= ((regularPrice - salePrice) / regularPrice * 100).toFixed(1) %>%
+        -<%= (discount / price * 100).toFixed(1) %>%
       </span>
     </span>
 
     <span class="sale">
-      <%= currencyFormatter.format(regularPrice) %>
+      <%= currencyFormatter.format(price) %>
     </span>
   <% } else { %>
     <span class="regular">
-      <%= currencyFormatter.format(regularPrice) %>
+      <%= currencyFormatter.format(price) %>
     </span>
   <% } %>
 </div>
