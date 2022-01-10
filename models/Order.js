@@ -21,7 +21,7 @@ const OrderSchema = mongoose.Schema({
     required: true
   },
 
-  productList: [{
+  products: [{
     productId: String,
     title: String,
     featuredImage: String,
@@ -30,6 +30,13 @@ const OrderSchema = mongoose.Schema({
     quantity: Number,
     total: Number
   }],
+
+  paymentMethod: {
+    type: String,
+    enum: ['COD', 'BANK_TRANSFER'],
+    default: 'COD',
+    required: true
+  },
 
   total: {
     type: Number,

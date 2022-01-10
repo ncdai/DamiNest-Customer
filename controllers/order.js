@@ -4,26 +4,27 @@ const createOrder = async (req, res, next) => {
   try {
     const { body } = req
 
-    const products = await ProductModel.find({
+    const productsFound = await ProductModel.find({
       _id: {
-        $in: body.productList.map((product) => product._id)
+        $in: body.products.map((product) => product.productId)
       }
     }).exec()
 
     const productsObj = {}
-    products.forEach((product) => {
+    productsFound.forEach((product) => {
       productsObj[String(product._id)] = product
     })
 
-    const productList = body.productList.map((p) => {
-      const product = productsObj?.[String(p._id)]
+    const products = body.products.map((p) => {
+      const productId = String(p.productId)
+      const product = productsObj?.[productId]
 
       if (!product) {
         return null
       }
 
       return {
-        productId: String(product._id),
+        productId,
         title: product.title,
         featuredImage: product.featuredImage,
         price: product.price,
@@ -33,21 +34,22 @@ const createOrder = async (req, res, next) => {
       }
     }).filter((p) => !!p)
 
-    const total = productList.reduce((prev, current) => prev + current.total, 0)
+    const total = products.reduce((prev, current) => prev + current.total, 0)
 
-    const order = new OrderModel({
+    const newOrder = new OrderModel({
       ownerId: body.ownerId,
       fullName: body.fullName,
       phoneNumber: body.phoneNumber,
       shippingAddress: body.shippingAddress,
-      productList: productList,
+      products: products,
+      paymentMethod: body.paymentMethod,
       total: total,
       status: 'PENDING'
     })
 
-    const newOrder = await order.save()
+    const order = await newOrder.save()
 
-    res.json(newOrder)
+    res.json(order)
   } catch (error) {
     next(error)
   }
