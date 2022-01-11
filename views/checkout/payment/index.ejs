@@ -13,10 +13,79 @@
   <main>
     <div class="container">
       <h1>Payment</h1>
+
+      <form id="form-payment" method="POST">
+        <div class="mb-3">
+          <label for="paymentMethod" class="form-label">Phương thức thanh toán</label>
+          <select class="form-select" name="paymentMethod" id="paymentMethod">
+            <option value="COD">Thanh toán khi nhận hàng</option>
+            <option value="BANK_TRANSFER">Chuyển khoản ngân hàng</option>
+          </select>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Đặt hàng</button>
+        </div>
+      </form>
     </div>
   </main>
 
   <%- include(layouts + '/foot'); %>
+
+  <script src="/js/checkout.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#form-payment').submit(function (event) {
+        event.preventDefault();
+
+        const shipping = checkoutLS.getShipping();
+
+        if (!shipping) {
+          toastr.warning("Vui lòng nhập thông tin giao hàng");
+          setTimeout(function () {
+            window.location = '/checkout/shipping';
+          }, 500);
+          return;
+        }
+
+        const paymentMethod = $('#paymentMethod').val();
+        const products = cartLS.list().map((p) => ({
+          productId: p.id,
+          quantity: p.quantity
+        }));
+
+        const body = {
+          fullName: shipping.fullName,
+          phoneNumber: shipping.phoneNumber,
+          shippingAddress: shipping.shippingAddress,
+          products: products,
+          paymentMethod: paymentMethod
+        };
+
+        $.ajax({
+          url: '/checkout/create-order',
+          type: 'POST',
+          data: body,
+          success: function (data) {
+            console.log('Checkout -> Success', data);
+            toastr.success('Đặt hàng thành công');
+
+            checkoutLS.clearShipping();
+            cartLS.destroy();
+
+            setTimeout(function () {
+              window.location = '/checkout/success';
+            }, 500);
+          },
+          error: function (error) {
+            console.log('Checkout -> Error', error);
+            toastr.error('Lỗi đặt hàng');
+          }
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

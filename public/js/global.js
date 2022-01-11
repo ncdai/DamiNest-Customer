@@ -6,7 +6,16 @@ function updateCartBadge () {
   }
 }
 
+function handleLogoutClick (event) {
+  event.preventDefault();
+  cartLS.destroy();
+  window.location = '/auth/logout';
+}
+
 $(document).ready(function () {
+  $('#dropdown-item-logout').on('click', handleLogoutClick);
+  $('#list-group-item-logout').on('click', handleLogoutClick);
+
   // Add smooth scrolling to all links
   $("a").on('click', function (event) {
     // Make sure this.hash has a value before overriding default behavior
@@ -15,7 +24,7 @@ $(document).ready(function () {
       event.preventDefault();
 
       // Store hash
-      var hash = this.hash;
+      const hash = this.hash;
 
       // Using jQuery's animate() method to add smooth page scroll
       $('html, body').animate({

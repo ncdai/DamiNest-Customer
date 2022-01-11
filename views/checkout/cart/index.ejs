@@ -14,10 +14,13 @@
 
       <h1>Cart</h1>
 
-      <div id="cart-items">
-      </div>
+      <div id="cart-items"></div>
 
       <div id="total-price"></div>
+
+      <div>
+        <a href="/checkout/shipping">Thanh toán</a>
+      </div>
 
       <div class="clearfix-56"></div>
     </div>
@@ -37,12 +40,13 @@
           quantity: quantity
         },
         success: function (data) {
-          console.log('updateCartQuantity -> success', data);
+          console.log('updateCartQuantity -> Success', data);
         },
         error: function (error) {
           console.log('updateCartQuantity -> Error', error);
+          toastr.error("Lỗi cập nhật giỏ hàng");
         }
-      })
+      });
     }
 
     function deleteFromCart (productId) {
@@ -55,10 +59,11 @@
           productId: productId
         },
         success: function (data) {
-          console.log('deleteFromCart -> success', data);
+          console.log('deleteFromCart -> Success', data);
         },
         error: function (error) {
           console.log('deleteFromCart -> Error', error);
+          toastr.error("Lỗi xoá giỏ hàng");
         }
       });
     }
@@ -88,22 +93,30 @@
         updateCartTotal();
       });
 
-      $.get('/checkout/cart/get', function (data, status) {
-        if (data.source === 'fromUser') {
-          // Cart data from user
-          console.log('Load cart data from user');
-          cartLS.destroy();
-          data.cart.forEach((item) => {
-            console.log(item);
-            cartLS.add(item, item.quantity);
-          })
-        } else {
-          // Cart data from localStorage
-          console.log('Load cart data from localStorage');
-          renderCartItems(cartLS.list());
-          updateCartTotal();
+      $.ajax({
+        url: '/checkout/cart/get',
+        type: 'GET',
+        success: function (data) {
+          if (data.source === 'fromUser') {
+            // Cart data from user
+            console.log('getCart -> Success', 'Load cart data from user');
+            cartLS.destroy();
+            data.cart.forEach((item) => {
+              console.log(item);
+              cartLS.add(item, item.quantity);
+            })
+          } else {
+            // Cart data from localStorage
+            console.log('getCart -> Success', 'Load cart data from localStorage');
+            renderCartItems(cartLS.list());
+            updateCartTotal();
+          }
+        },
+        error: function (error) {
+          console.log('getCart -> Error', error);
+          toastr.error("Lỗi lấy thông tin giỏ hàng");
         }
-      })
+      });
     });
   </script>
 </body>

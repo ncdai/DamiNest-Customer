@@ -13,10 +13,54 @@
   <main>
     <div class="container">
       <h1>Shipping</h1>
+
+      <form id="form-shipping" method="POST">
+        <div class="mb-3">
+          <label for="fullName" class="form-label">Họ tên</label>
+          <input type="text" class="form-control" name="fullName" id="fullName" placeholder="Họ và tên" value="<%= currentUser.fullName %>" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="phoneNumber" class="form-label">Điện thoại</label>
+          <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="Điện thoại" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="shippingAddress" class="form-label">Địa chỉ nhận hàng</label>
+          <input type="text" class="form-control" name="shippingAddress" id="shippingAddress" placeholder="Địa chỉ nhận hàng" required>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Giao đến địa chỉ này</button>
+        </div>
+      </form>
     </div>
   </main>
 
   <%- include(layouts + '/foot'); %>
+
+  <script src="/js/checkout.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#form-shipping').submit(function (event) {
+        event.preventDefault();
+
+        if (!cartLS.list().length) {
+          toastr.warning("Vui lòng thêm sản phẩm vào giỏ hàng");
+          return;
+        }
+
+        checkoutLS.saveShipping({
+          fullName: $('#fullName').val(),
+          phoneNumber: $('#phoneNumber').val(),
+          shippingAddress: $('#shippingAddress').val()
+        });
+
+        window.location = '/checkout/payment';
+      });
+    });
+  </script>
 </body>
 
 </html>

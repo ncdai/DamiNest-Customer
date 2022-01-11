@@ -10,10 +10,25 @@ const registerStrategy = new LocalStrategy(
   },
   async (req, email, password, done) => {
     try {
-      const user = await UserModel.create({ email, password, fullName: req.body?.fullName })
+      let cart = []
+
+      //
+      // Neu nguoi dung chua register & muon thanh toan cartLS
+      // -> Khoi tao cart cua tai khoan dang register thanh cartLS
+      //
+      if (['/checkout/shipping'].includes(req.query?.nextUrl)) {
+        cart = JSON.parse(req.body.cartLS) || []
+      }
+
+      const user = await UserModel.create({
+        email,
+        password,
+        fullName: req.body?.fullName,
+        cart
+      })
       return done(null, user)
     } catch (error) {
-      done(error)
+      done(null, false, { message: error.message })
     }
   }
 )
@@ -21,9 +36,10 @@ const registerStrategy = new LocalStrategy(
 const loginStrategy = new LocalStrategy(
   {
     usernameField: 'email',
-    passwordField: 'password'
+    passwordField: 'password',
+    passReqToCallback: true
   },
-  async (email, password, done) => {
+  async (req, email, password, done) => {
     try {
       const user = await UserModel.findOne({ email })
 
@@ -37,9 +53,22 @@ const loginStrategy = new LocalStrategy(
         return done(null, false, { message: 'Incorrect password' })
       }
 
+      //
+      // Neu nguoi dung chua login & muon thanh toan cartLS
+      // -> Replace cart cua tai khoan dang login thanh cartLS
+      //
+      if (['/checkout/shipping'].includes(req.query?.nextUrl)) {
+        const cart = JSON.parse(req.body.cartLS) || []
+        await UserModel.findByIdAndUpdate(user._id, {
+          $set: {
+            cart
+          }
+        })
+      }
+
       return done(null, user)
     } catch (error) {
-      return done(error)
+      return done(null, false, { message: error.message })
     }
   }
 )

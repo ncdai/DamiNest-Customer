@@ -1,4 +1,4 @@
-const { ProductModel, OrderModel } = require('../models')
+const { ProductModel, OrderModel, UserModel } = require('../models')
 
 const createOrder = async (req, res, next) => {
   try {
@@ -37,7 +37,7 @@ const createOrder = async (req, res, next) => {
     const total = products.reduce((prev, current) => prev + current.total, 0)
 
     const newOrder = new OrderModel({
-      ownerId: body.ownerId,
+      ownerId: req.user._id,
       fullName: body.fullName,
       phoneNumber: body.phoneNumber,
       shippingAddress: body.shippingAddress,
@@ -47,11 +47,17 @@ const createOrder = async (req, res, next) => {
       status: 'PENDING'
     })
 
-    const order = await newOrder.save()
+    // Save order and clear cart
+    const [order] = await Promise.all([
+      newOrder.save(),
+      UserModel.findByIdAndUpdate(req.user._id, {
+        $set: { cart: [] }
+      })
+    ])
 
     res.json(order)
   } catch (error) {
-    next(error)
+    res.boom.badData(error.message)
   }
 }
 

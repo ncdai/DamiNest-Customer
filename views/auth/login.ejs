@@ -14,7 +14,7 @@
 
       <div class="row">
         <div class="col-12 col-md-6 offset-md-3">
-          <form action="/auth/login" method="post">
+          <form action="<%= formAction %>" method="post" id="form-login">
             <h1 class="page-heading">Đăng nhập</h1>
 
             <% if (loginRes === "FAILED") { %>
@@ -33,12 +33,14 @@
               <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" required />
             </div>
 
+            <input type="hidden" name="cartLS" id="cartLS">
+
             <div class="d-grid mb-3">
               <button type="submit" class="btn btn-primary btn-full">Đăng nhập</button>
             </div>
 
             <div class="text-center">
-              <p>Bạn chưa có tài khoản? <a href="/auth/register">Đăng ký ngay</a></p>
+              <p>Bạn chưa có tài khoản? <a href="<%= registerUrl %>">Đăng ký ngay</a></p>
             </div>
           </form>
         </div>
@@ -47,6 +49,17 @@
   </main>
 
   <%- include(layouts + '/foot'); %>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      const cart = cartLS.list().map((item) => ({
+        productId: item.id,
+        quantity: item.quantity
+      }));
+
+      $('#cartLS').val(JSON.stringify(cart));
+    });
+  </script>
 </body>
 
 </html>

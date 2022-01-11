@@ -1,9 +1,18 @@
+const queryString = require('query-string')
+
 const requiredLogin = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next()
   }
 
-  res.redirect('/auth/login')
+  const redirectUrl = queryString.stringifyUrl({
+    url: '/auth/login',
+    query: {
+      nextUrl: req.originalUrl
+    }
+  })
+
+  res.redirect(redirectUrl)
 }
 
 const notRequiredLogin = (req, res, next) => {

@@ -22,7 +22,6 @@ const {
   homeRouter,
   productsRouter,
   profileRouter,
-  ordersRouter,
   checkoutRouter
 } = require('./routes')
 
@@ -40,7 +39,7 @@ app.set('view engine', 'ejs')
 app.use(logger('dev'))
 app.use(boom())
 app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
@@ -79,7 +78,6 @@ app.use('/profile', authMiddleware.requiredLogin, profileRouter)
 app.use('/about', aboutRouter)
 app.use('/products', productsRouter)
 app.use('/handbook', handbookRouter)
-app.use('/orders', ordersRouter)
 app.use('/checkout', checkoutRouter)
 app.use('/', homeRouter)
 
