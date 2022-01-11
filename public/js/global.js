@@ -1,6 +1,9 @@
 function updateCartBadge () {
   const total = cartLS.list().length;
-  $('#cart-badge').html(total);
+  if (total > 0) {
+    $('#cart-badge').html(total);
+    $('#cart-badge').removeClass('hide');
+  }
 }
 
 $(document).ready(function () {

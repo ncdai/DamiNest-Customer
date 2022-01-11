@@ -143,15 +143,26 @@
       });
 
       $('#btn-add-to-cart').on('click', function () {
-        toastr.success("Đã thêm vào giỏ hàng");
+        const quantity = getQuantity()
 
-        const quantity = getQuantity();
+        toastr.info("Đang thêm vào giỏ hàng");
 
-        cartLS.add({
-          id: '<%= product._id %>',
-          name: '<%= product.name %>',
-          price: parseInt('<%= product.salePrice > 0 ? product.salePrice : product.regularPrice %>')
-        }, quantity);
+        $.ajax({
+          url: '/cart/add',
+          type: 'PUT',
+          data: {
+            productId: '<%= product._id %>',
+            quantity: quantity
+          },
+          success: function (data) {
+            console.log('addToCart -> Success', data);
+            cartLS.add(data, quantity);
+            toastr.success("Đã thêm vào giỏ hàng");
+          },
+          error: function (error) {
+            console.log('addToCart -> Error', error);
+          }
+        });
       });
 
       cartLS.onChange(function (items) {

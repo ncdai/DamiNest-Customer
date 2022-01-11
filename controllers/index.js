@@ -7,6 +7,7 @@ const handbookController = require('./handbook')
 const profileController = require('./profile')
 const cartController = require('./cart')
 const orderController = require('./order')
+const checkoutController = require('./checkout')
 
 module.exports = {
   aboutController,
@@ -17,5 +18,6 @@ module.exports = {
   handbookController,
   profileController,
   cartController,
-  orderController
+  orderController,
+  checkoutController
 }
