@@ -2,10 +2,10 @@ const mongoose = require('mongoose')
 const { UserModel, ProductModel } = require('../models')
 
 const index = async (req, res) => {
-  res.render('cart/index')
+  res.render('checkout/cart/index')
 }
 
-const addToCart = async (req, res) => {
+const addProductToCart = async (req, res) => {
   const { productId, quantity } = req.body
 
   const promises = []
@@ -62,7 +62,7 @@ const addToCart = async (req, res) => {
   res.json(cartItem)
 }
 
-const deleteFromCart = async (req, res) => {
+const deleteProductFromCart = async (req, res) => {
   const { productId } = req.body
 
   if (!req.user?._id) {
@@ -127,6 +127,6 @@ const getCart = async (req, res) => {
 module.exports = {
   index,
   getCart,
-  addToCart,
-  deleteFromCart
+  addProductToCart,
+  deleteProductFromCart
 }

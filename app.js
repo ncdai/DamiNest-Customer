@@ -22,7 +22,6 @@ const {
   homeRouter,
   productsRouter,
   profileRouter,
-  cartRouter,
   ordersRouter,
   checkoutRouter
 } = require('./routes')
@@ -80,7 +79,6 @@ app.use('/profile', authMiddleware.requiredLogin, profileRouter)
 app.use('/about', aboutRouter)
 app.use('/products', productsRouter)
 app.use('/handbook', handbookRouter)
-app.use('/cart', cartRouter)
 app.use('/orders', ordersRouter)
 app.use('/checkout', checkoutRouter)
 app.use('/', homeRouter)

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <%- include(layouts + '/head'); %>
+</head>
+
+<body id="cart-page">
+  <%- include(layouts + '/header'); %>
+
+  <main>
+    <div class="container">
+      <div class="clearfix-56"></div>
+
+      <h1>Cart</h1>
+
+      <div id="cart-items">
+      </div>
+
+      <div id="total-price"></div>
+
+      <div class="clearfix-56"></div>
+    </div>
+  </main>
+
+  <%- include(layouts + '/foot'); %>
+
+  <script type="text/javascript">
+    function updateCartQuantity (productId, quantity) {
+      cartLS.quantity(productId, quantity);
+
+      $.ajax({
+        url: '/checkout/cart/add',
+        type: 'PUT',
+        data: {
+          productId: productId,
+          quantity: quantity
+        },
+        success: function (data) {
+          console.log('updateCartQuantity -> success', data);
+        },
+        error: function (error) {
+          console.log('updateCartQuantity -> Error', error);
+        }
+      })
+    }
+
+    function deleteFromCart (productId) {
+      cartLS.remove(productId);
+
+      $.ajax({
+        url: '/checkout/cart/delete',
+        type: 'DELETE',
+        data: {
+          productId: productId
+        },
+        success: function (data) {
+          console.log('deleteFromCart -> success', data);
+        },
+        error: function (error) {
+          console.log('deleteFromCart -> Error', error);
+        }
+      });
+    }
+
+    function renderCartItems (items) {
+      $('#cart-items').html(items.map((item) => {
+        return `
+          <div>
+            <a>${item.name}</a>
+            <button onClick="updateCartQuantity('${item.id}', -1)">-</button>
+            <span>${item.quantity}</span>
+            <button onClick="updateCartQuantity('${item.id}', 1)">+</button>
+            <button onClick="deleteFromCart('${item.id}')">x</button>
+          </div>
+        `;
+      }));
+    }
+
+    function updateCartTotal () {
+      $('#total-price').html(cartLS.total());
+    }
+
+    $(document).ready(function () {
+      cartLS.onChange(function (items) {
+        renderCartItems(items);
+        updateCartBadge();
+        updateCartTotal();
+      });
+
+      $.get('/checkout/cart/get', function (data, status) {
+        if (data.source === 'fromUser') {
+          // Cart data from user
+          console.log('Load cart data from user');
+          cartLS.destroy();
+          data.cart.forEach((item) => {
+            console.log(item);
+            cartLS.add(item, item.quantity);
+          })
+        } else {
+          // Cart data from localStorage
+          console.log('Load cart data from localStorage');
+          renderCartItems(cartLS.list());
+          updateCartTotal();
+        }
+      })
+    });
+  </script>
+</body>
+
+</html>

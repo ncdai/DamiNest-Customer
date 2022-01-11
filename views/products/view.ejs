@@ -148,7 +148,7 @@
         toastr.info("Đang thêm vào giỏ hàng");
 
         $.ajax({
-          url: '/cart/add',
+          url: '/checkout/cart/add',
           type: 'PUT',
           data: {
             productId: '<%= product._id %>',
