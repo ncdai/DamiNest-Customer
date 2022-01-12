@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { ProductModel, ProductCategoryModel } = require('../models')
+const { ProductModel, ProductCategoryModel, ProductReviewModel } = require('../models')
 const config = require('../config')
 const { commonUtil } = require('../utils')
 
@@ -131,8 +131,33 @@ const view = async (req, res, next) => {
   res.render('products/view', { product })
 }
 
+const getReviews = async (req, res) => {
+  const { productId } = req.params
+
+  if (!productId) {
+    res.boom.badRequest()
+    return
+  }
+
+  const data = await ProductReviewModel.paginate({
+    productId
+  }, {
+    page: req.query?.page || 1,
+    populate: {
+      path: 'ownerId',
+      select: '-password'
+    },
+    sort: {
+      updatedAt: 'desc'
+    }
+  })
+
+  res.json(data)
+}
+
 module.exports = {
   index,
   search,
-  view
+  view,
+  getReviews
 }

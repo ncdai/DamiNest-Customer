@@ -23,7 +23,16 @@ const notRequiredLogin = (req, res, next) => {
   next()
 }
 
+const requiredLoginWithBoom = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next()
+  }
+
+  res.boom.unauthorized()
+}
+
 module.exports = {
   requiredLogin,
-  notRequiredLogin
+  notRequiredLogin,
+  requiredLoginWithBoom
 }
