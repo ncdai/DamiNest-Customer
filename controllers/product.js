@@ -132,27 +132,31 @@ const view = async (req, res, next) => {
 }
 
 const getReviews = async (req, res) => {
-  const { productId } = req.params
+  try {
+    const { productId } = req.params
 
-  if (!productId) {
-    res.boom.badRequest()
-    return
-  }
-
-  const data = await ProductReviewModel.paginate({
-    productId
-  }, {
-    page: req.query?.page || 1,
-    populate: {
-      path: 'ownerId',
-      select: '-password'
-    },
-    sort: {
-      updatedAt: 'desc'
+    if (!productId) {
+      res.boom.badRequest()
+      return
     }
-  })
 
-  res.json(data)
+    const data = await ProductReviewModel.paginate({
+      productId
+    }, {
+      page: req.query?.page || 1,
+      populate: {
+        path: 'ownerId',
+        select: '-password'
+      },
+      sort: {
+        updatedAt: 'desc'
+      }
+    })
+
+    res.json(data)
+  } catch (error) {
+    res.boom.badRequest(error.message)
+  }
 }
 
 module.exports = {

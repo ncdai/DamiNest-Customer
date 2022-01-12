@@ -11,13 +11,6 @@ const postReview = async (req, res) => {
       return
     }
 
-    // ProductModel.findByIdAndUpdate(productId, {
-    //   $set: {
-    //     ratingAvg: (product.ratingAvg + rating) / (product.totalRatings + 1),
-    //     totalRatings: product.totalRatings + 1
-    //   }
-    // }, { new: true })
-
     const review = new ProductReviewModel({
       productId,
       ownerId: req.user._id,
