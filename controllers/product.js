@@ -1,12 +1,18 @@
 const mongoose = require('mongoose')
 const { ProductModel, ProductCategoryModel } = require('../models')
 const config = require('../config')
+const { commonUtil } = require('../utils')
 
-const getProducts = async ({ page, categoryId } = {}) => {
+const getProducts = async ({ page, categoryId, sort } = {}) => {
   const query = {}
+  let _sort = {}
 
   if (categoryId) {
     query.categoryId = categoryId
+  }
+
+  if (sort) {
+    _sort = commonUtil.convertSortQueryStringToMongooseSort(sort)
   }
 
   const data = await ProductModel.paginate(query, {
@@ -15,18 +21,19 @@ const getProducts = async ({ page, categoryId } = {}) => {
     populate: {
       path: 'categoryId ownerId',
       select: '-password'
-    }
+    },
+    sort: _sort
   })
 
   return data
 }
 
 const index = async (req, res) => {
-  const { page, categoryId } = req.query
+  const { page, categoryId, sort } = req.query
 
   const [categoriesRes, productsRes] = await Promise.all([
     ProductCategoryModel.find(),
-    getProducts({ page, categoryId })
+    getProducts({ page, categoryId, sort })
   ])
 
   const {
@@ -47,6 +54,67 @@ const index = async (req, res) => {
   })
 }
 
+const search = async (req, res) => {
+  const query = {}
+  let sort = {}
+
+  // Keyword
+  if (req.query?.keyword) {
+    query.$text = {
+      $search: req.query?.keyword
+    }
+  }
+
+  // Category
+  if (req.query?.categoryId) {
+    if (Array.isArray(req.query.categoryId)) {
+      query.categoryId = {
+        $in: req.query.categoryId
+      }
+    } else {
+      query.categoryId = req.query.categoryId
+    }
+  }
+
+  // Price
+  if (req.query?.priceMin || req.query?.priceMax) {
+    query.price = {}
+
+    if (req.query?.priceMin) {
+      query.price.$gte = parseInt(req.query.priceMin)
+    }
+
+    if (req.query?.priceMax) {
+      query.price.$lte = parseInt(req.query.priceMax)
+    }
+  }
+
+  // Rating
+  if (req.query?.ratingMin) {
+    query.ratingAvg = {
+      $gte: parseInt(req.query.ratingMin)
+    }
+  }
+
+  // Sort
+  if (req.query?.sort) {
+    sort = commonUtil.convertSortQueryStringToMongooseSort(req.query.sort)
+  }
+
+  const data = await ProductModel.paginate(query, {
+    page: req.query?.page || 1,
+    sort,
+    populate: {
+      path: 'categoryId ownerId',
+      select: '-password'
+    }
+  })
+
+  console.log({ query, sort })
+
+  res.json(data)
+}
+
 const view = async (req, res, next) => {
   const { productId } = req.params
 
@@ -65,5 +133,6 @@ const view = async (req, res, next) => {
 
 module.exports = {
   index,
+  search,
   view
 }
