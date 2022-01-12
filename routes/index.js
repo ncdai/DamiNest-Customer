@@ -5,6 +5,7 @@ const homeRouter = require('./home')
 const productsRouter = require('./products')
 const profileRouter = require('./profile')
 const checkoutRouter = require('./checkout')
+const productReviewRouter = require('./productReview')
 
 module.exports = {
   aboutRouter,
@@ -13,5 +14,6 @@ module.exports = {
   homeRouter,
   productsRouter,
   profileRouter,
-  checkoutRouter
+  checkoutRouter,
+  productReviewRouter
 }
