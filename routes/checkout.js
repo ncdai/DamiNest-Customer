@@ -12,7 +12,7 @@ router.delete('/cart/delete-all', cartController.deleteAllProductFromCart)
 
 router.get('/shipping', authMiddleware.requiredLogin, checkoutController.shipping)
 router.get('/payment', authMiddleware.requiredLogin, checkoutController.payment)
-router.get('/success', authMiddleware.requiredLogin, checkoutController.success)
+router.get('/result', authMiddleware.requiredLogin, checkoutController.result)
 
 router.post('/create-order', authMiddleware.requiredLogin, orderController.createOrder)
 

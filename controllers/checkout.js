@@ -6,12 +6,14 @@ const payment = (req, res) => {
   res.render('checkout/payment')
 }
 
-const success = (req, res) => {
-  res.render('checkout/success')
+const result = (req, res) => {
+  res.render('checkout/result', {
+    orderSuccess: req.query?.success === 'true'
+  })
 }
 
 module.exports = {
   shipping,
   payment,
-  success
+  result
 }

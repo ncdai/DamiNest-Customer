@@ -16,7 +16,9 @@
           <div class="row">
             <div class="col col-12 col-md-8 offset-md-2">
               <div class="logo">
-                <img src="/images/logo-with-text.svg" height="56px" />
+                <a href="/">
+                  <img src="/images/logo-with-text.svg" height="56px" />
+                </a>
               </div>
 
               <div class="steps">
@@ -202,12 +204,16 @@
             cartLS.destroy();
 
             setTimeout(function () {
-              window.location = '/checkout/success';
+              window.location = '/checkout/result?success=true';
             }, 500);
           },
           error: function (error) {
             console.log('Checkout -> Error', error);
             toastr.error('Lỗi đặt hàng');
+
+            setTimeout(function () {
+              window.location = '/checkout/result?success=false';
+            }, 500);
           }
         });
       });
