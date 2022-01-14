@@ -8,6 +8,7 @@ router.get('/cart', cartController.index)
 router.get('/cart/get', cartController.getCart)
 router.put('/cart/add', cartController.addProductToCart)
 router.delete('/cart/delete', cartController.deleteProductFromCart)
+router.delete('/cart/delete-all', cartController.deleteAllProductFromCart)
 
 router.get('/shipping', authMiddleware.requiredLogin, checkoutController.shipping)
 router.get('/payment', authMiddleware.requiredLogin, checkoutController.payment)

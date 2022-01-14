@@ -128,7 +128,10 @@ const view = async (req, res, next) => {
     return next(new Error('Không tìm thấy sản phẩm!'))
   }
 
-  const relatedProducts = await ProductModel.find({ categoryId: product.categoryId }).limit(3).exec()
+  const [relatedProducts] = await Promise.all([
+    ProductModel.find({ categoryId: product.categoryId }).limit(3).exec(),
+    ProductModel.findByIdAndUpdate(productId, { $inc: { totalViews: 1 } }).exec()
+  ])
 
   res.render('products/view', { product, relatedProducts })
 }

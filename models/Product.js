@@ -31,6 +31,14 @@ const productSchema = mongoose.Schema({
     type: Number,
     default: 0
   },
+  totalViews: {
+    type: Number,
+    default: 0
+  },
+  totalPurchases: {
+    type: Number,
+    default: 0
+  },
   price: {
     type: Number,
     default: 0,

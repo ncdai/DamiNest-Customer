@@ -12,6 +12,13 @@ function handleLogoutClick (event) {
   window.location = '/auth/logout';
 }
 
+function currencyFormatter (value) {
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  }).format(value);
+}
+
 $(document).ready(function () {
   $('#dropdown-item-logout').on('click', handleLogoutClick);
   $('#list-group-item-logout').on('click', handleLogoutClick);

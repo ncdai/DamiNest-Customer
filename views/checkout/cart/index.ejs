@@ -3,26 +3,46 @@
 
 <head>
   <%- include(layouts + '/head'); %>
+
+  <link rel="stylesheet" href="/css/checkout/cart.css">
 </head>
 
-<body id="cart-page">
+<body id="checkout-cart-page">
   <%- include(layouts + '/header'); %>
 
   <main>
     <div class="container">
-      <div class="clearfix-56"></div>
+      <div class="clearfix-32"></div>
 
-      <h1>Cart</h1>
+      <div class="heading">
+        <h1>Giỏ hàng</h1>
+        <button onclick="deleteAllFromCart();">Xoá tất cả</button>
+      </div>
 
       <div id="cart-items"></div>
 
-      <div id="total-price"></div>
+      <div class="clearfix-32"></div>
+    </div>
 
-      <div>
-        <a href="/checkout/shipping">Thanh toán</a>
+    <div class="clearfix-56"></div>
+
+    <div class="fixed-bottom">
+      <div class="container">
+        <div class="content">
+          <div class="total">
+            <span class="total-label">Thành tiền :</span>
+            <span class="total-value" id="total-price">0 ₫</span>
+          </div>
+
+          <div class="vat-included">
+            <span>Đã bao gồm VAT nếu có</span>
+          </div>
+
+          <div class="next-step">
+            <button class="btn-daminest primary" id="btn-next-step">Thanh toán</button>
+          </div>
+        </div>
       </div>
-
-      <div class="clearfix-56"></div>
     </div>
   </main>
 
@@ -68,22 +88,66 @@
       });
     }
 
+    function deleteAllFromCart () {
+      const isConfirmed = window.confirm("Bạn chắc chắc muốn xoá giỏ hàng?");
+
+      if (!isConfirmed) {
+        return;
+      }
+
+      cartLS.destroy();
+
+      $.ajax({
+        url: '/checkout/cart/delete-all',
+        type: 'DELETE',
+        success: function (data) {
+          console.log('deleteAllFromCart -> Success', data);
+        },
+        error: function (error) {
+          console.log('deleteAllFromCart -> Error', error);
+          toastr.error("Lỗi xoá giỏ hàng");
+        }
+      });
+    }
+
     function renderCartItems (items) {
       $('#cart-items').html(items.map((item) => {
         return `
-          <div>
-            <a>${item.name}</a>
-            <button onClick="updateCartQuantity('${item.id}', -1)">-</button>
-            <span>${item.quantity}</span>
-            <button onClick="updateCartQuantity('${item.id}', 1)">+</button>
-            <button onClick="deleteFromCart('${item.id}')">x</button>
+          <div class="cart-product-item">
+            <div class="featured-image">
+              <img src="/images/product/HH11.jpg" />
+            </div>
+
+            <div class="info">
+              <a href="/products/${item.id}"><h2>${item.name}</h2></a>
+
+              <div class="price">
+                <span>
+                  ${currencyFormatter(item.price)}
+                </span>
+              </div>
+
+              <button class="btn-delete" onclick="deleteFromCart('${item.id}')">Xoá sản phẩm</button>
+            </div>
+
+            <div class="quantity">
+              <button onclick="updateCartQuantity('${item.id}', -1)">
+                <i class="fas fa-minus"></i>
+              </button>
+
+              <span>${item.quantity}</span>
+
+              <button onclick="updateCartQuantity('${item.id}', 1)">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
           </div>
         `;
       }));
     }
 
     function updateCartTotal () {
-      $('#total-price').html(cartLS.total());
+      $('#total-price').html(currencyFormatter(cartLS.total()));
     }
 
     $(document).ready(function () {
@@ -116,6 +180,15 @@
           console.log('getCart -> Error', error);
           toastr.error("Lỗi lấy thông tin giỏ hàng");
         }
+      });
+
+      $('#btn-next-step').on('click', function () {
+        if (!cartLS.list().length) {
+          toastr.warning("Vui lòng thêm sản phẩm vào giỏ hàng");
+          return;
+        }
+
+        window.location = '/checkout/shipping';
       });
     });
   </script>

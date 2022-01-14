@@ -124,9 +124,24 @@ const getCart = async (req, res) => {
   })
 }
 
+const deleteAllProductFromCart = async (req, res) => {
+  if (!req.user?._id) {
+    res.json(true)
+    return
+  }
+
+  await UserModel.findByIdAndUpdate(
+    req.user._id,
+    { $set: { cart: [] } }
+  ).exec()
+
+  res.json(true)
+}
+
 module.exports = {
   index,
   getCart,
   addProductToCart,
-  deleteProductFromCart
+  deleteProductFromCart,
+  deleteAllProductFromCart
 }
