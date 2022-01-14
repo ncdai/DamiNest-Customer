@@ -12,7 +12,7 @@
 
   <main>
     <div class="container">
-      <div class="row gx-0">
+      <div class="row gx-0 product-view">
         <div class="col-12 col-lg-6">
           <div class="featured-image">
             <div class="featured-image-img" style="background-image: url('/images/product/featured-image.jpg')"></div>
@@ -67,7 +67,7 @@
       </div>
 
       <div class="properties">
-        <h3 class="properties-heading">
+        <h3 class="heading">
           Thông tin chi tiết
           <span></span>
         </h3>
@@ -108,6 +108,21 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="related-products">
+        <h3 class="heading heading-reverse">
+          Sản phẩm liên quan
+          <span></span>
+        </h3>
+
+        <div class="row gx-3 gy-3">
+          <% relatedProducts.forEach(function(relatedProduct) { %>
+            <div class="col-12 col-md-4">
+              <%- include(views + '/products/components/product-item', { product: relatedProduct }); %>
+            </div>
+          <% }); %>
         </div>
       </div>
     </div>

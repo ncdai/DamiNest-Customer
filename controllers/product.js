@@ -128,7 +128,9 @@ const view = async (req, res, next) => {
     return next(new Error('Không tìm thấy sản phẩm!'))
   }
 
-  res.render('products/view', { product })
+  const relatedProducts = await ProductModel.find({ categoryId: product.categoryId }).limit(3).exec()
+
+  res.render('products/view', { product, relatedProducts })
 }
 
 const getReviews = async (req, res) => {
