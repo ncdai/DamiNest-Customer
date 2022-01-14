@@ -9,10 +9,15 @@ router.post('/register', authMiddleware.notRequiredLogin, authController.postReg
 
 router.get('/login', authMiddleware.notRequiredLogin, authController.getLogin)
 router.post('/login', authMiddleware.notRequiredLogin, authController.postLogin)
-
 router.get('/logout', authMiddleware.requiredLogin, authController.getLogout)
 
-router.get('/send-verification-email', authMiddleware.requiredLoginWithBoom, authController.sendVerificationEmail)
-router.get('/verify-email', authController.verifyEmail)
+router.post('/send-verify-email', authMiddleware.requiredLoginWithBoom, authController.postSendVerifyEmail)
+router.get('/verify-email', authController.getVerifyEmail)
+
+router.get('/forgot-password', authController.getForgotPassword)
+router.post('/forgot-password', authController.postForgotPassword)
+
+router.get('/reset-password', authController.getResetPassword)
+router.post('/reset-password', authController.postResetPassword)
 
 module.exports = router

@@ -2,6 +2,7 @@ const { nanoid } = require('nanoid')
 const passport = require('passport')
 const queryString = require('query-string')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
 const { UserModel } = require('../models')
 const { mailUntil } = require('../utils')
@@ -79,11 +80,12 @@ const getLogout = (req, res) => {
   res.redirect('/auth/login')
 }
 
-const sendVerificationEmail = async (req, res) => {
+const postSendVerifyEmail = async (req, res) => {
   try {
+    const userId = req.user._id
     const emailId = nanoid()
 
-    const user = await UserModel.findByIdAndUpdate(req.user._id, { $set: { emailId } }, { new: true })
+    const user = await UserModel.findByIdAndUpdate(userId, { $set: { emailId } }, { new: true })
 
     if (!user) {
       res.boom.badRequest('Tài khoản không tồn tại')
@@ -97,7 +99,7 @@ const sendVerificationEmail = async (req, res) => {
 
     const token = jwt.sign(
       {
-        userId: req.user._id,
+        userId,
         emailId
       },
       config.SECRET_KEY,
@@ -105,8 +107,7 @@ const sendVerificationEmail = async (req, res) => {
     )
 
     await mailUntil.sendMail({
-      // to: req.user.email,
-      to: 'ncdai@penphy.edu.vn',
+      to: req.user.email,
       subject: 'Xác minh tài khoản',
       content: `<a href="http://localhost:8000/auth/verify-email?token=${token}">Click here</a>`
     })
@@ -117,18 +118,29 @@ const sendVerificationEmail = async (req, res) => {
   }
 }
 
-const verifyEmail = async (req, res) => {
+const getVerifyEmail = async (req, res) => {
   try {
     const { token } = req.query
+
+    if (!token) {
+      res.boom.badRequest('Vui lòng nhập Token')
+      return
+    }
+
     const decoded = jwt.verify(token, config.SECRET_KEY)
 
     const userId = decoded?.userId
     const emailId = decoded?.emailId
 
-    const user = await UserModel.findById(userId).exec()
+    if (!userId || !emailId) {
+      res.boom.badRequest('Mã xác nhận không hợp lệ')
+      return
+    }
+
+    const user = await UserModel.findOne({ _id: userId, emailId }).exec()
 
     if (!user) {
-      res.boom.badRequest('Tài khoản không tồn tại')
+      res.boom.badRequest('Mã xác nhận không hợp lệ')
       return
     }
 
@@ -137,16 +149,92 @@ const verifyEmail = async (req, res) => {
       return
     }
 
-    if (user.emailId !== emailId) {
-      res.boom.badRequest('Mã xác nhận không hợp lệ')
+    await UserModel
+      .findByIdAndUpdate(userId, { $set: { isVerified: true, emailId: '' } })
+      .select('-password -emailId -resetPasswordId')
+      .exec()
+
+    res.json(true)
+  } catch (err) {
+    res.boom.badRequest('Mã xác nhận không hợp lệ')
+  }
+}
+
+const getForgotPassword = async (req, res) => {
+  res.send('Reset Password Page')
+}
+
+const postForgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body
+
+    const user = await UserModel.findOne({ email }).exec()
+
+    if (!user) {
+      res.boom.badRequest('Tài khoản không tồn tại')
       return
     }
 
-    const updated = await UserModel.findByIdAndUpdate(userId, { $set: { isVerified: true } }, { new: true }).select('-password -emailId')
+    const userId = user._id
+    const resetPasswordId = nanoid()
 
-    res.json(updated)
+    const token = jwt.sign(
+      {
+        userId,
+        resetPasswordId
+      },
+      config.SECRET_KEY,
+      { expiresIn: '24h' }
+    )
+
+    await UserModel.findByIdAndUpdate(userId, { $set: { resetPasswordId } }).exec()
+
+    await mailUntil.sendMail({
+      to: email,
+      subject: 'Đặt lại mật khẩu',
+      content: `<a href="http://localhost:8000/auth/reset-password?token=${token}">Click here</a>`
+    })
+
+    res.json(true)
+  } catch (error) {
+    res.boom.badRequest(error.message)
+  }
+}
+
+const getResetPassword = async (req, res) => {
+  res.send('Reset Password Page')
+}
+
+const postResetPassword = async (req, res) => {
+  try {
+    const { token, newPassword } = req.body
+
+    const decoded = jwt.verify(token, config.SECRET_KEY)
+    const userId = decoded?.userId
+    const resetPasswordId = decoded?.resetPasswordId
+
+    if (!userId || !resetPasswordId) {
+      res.boom.badRequest('Mã khôi phục không hợp lệ')
+      return
+    }
+
+    const user = await UserModel.findOne({ _id: userId, resetPasswordId }).exec()
+
+    if (!user) {
+      res.boom.badRequest('Mã khôi phục không hợp lệ')
+      return
+    }
+
+    const hashPassword = await bcrypt.hash(newPassword, 10)
+
+    await UserModel
+      .findByIdAndUpdate(userId, { $set: { password: hashPassword, resetPasswordId: '' } })
+      .select('-password -emailId -resetPasswordId')
+      .exec()
+
+    res.json(true)
   } catch (err) {
-    res.boom.badRequest('Mã xác nhận không hợp lệ')
+    res.boom.badRequest('Mã khôi phục không hợp lệ')
   }
 }
 
@@ -156,9 +244,14 @@ module.exports = {
 
   getLogin,
   postLogin,
-
   getLogout,
 
-  sendVerificationEmail,
-  verifyEmail
+  postSendVerifyEmail,
+  getVerifyEmail,
+
+  getForgotPassword,
+  postForgotPassword,
+
+  getResetPassword,
+  postResetPassword
 }

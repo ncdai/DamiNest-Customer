@@ -48,6 +48,9 @@ const UserSchema = mongoose.Schema({
 
   emailId: {
     type: String
+  },
+  resetPasswordId: {
+    type: String
   }
 }, {
   timestamps: true
