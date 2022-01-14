@@ -17,6 +17,9 @@ Create file `.env`
 MONGODB_URL=
 SECRET_KEY=
 PORT=3000
+
+MAILGUN_API_KEY=
+MAILGUN_DOMAIN=
 ```
 
 ## Run

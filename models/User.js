@@ -44,7 +44,11 @@ const UserSchema = mongoose.Schema({
       required: true,
       default: 1
     }
-  }]
+  }],
+
+  emailId: {
+    type: String
+  }
 }, {
   timestamps: true
 })

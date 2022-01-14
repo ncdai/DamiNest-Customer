@@ -12,4 +12,7 @@ router.post('/login', authMiddleware.notRequiredLogin, authController.postLogin)
 
 router.get('/logout', authMiddleware.requiredLogin, authController.getLogout)
 
+router.get('/send-verification-email', authMiddleware.requiredLoginWithBoom, authController.sendVerificationEmail)
+router.get('/verify-email', authController.verifyEmail)
+
 module.exports = router
