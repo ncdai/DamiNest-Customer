@@ -1,15 +1,13 @@
 @import "../variables";
 
 #checkout-cart-page {
-  // background-color: red;
-
   .heading {
     display: flex;
     align-items: center;
 
     padding-bottom: 0.25rem;
     margin-bottom: 1rem;
-    border-bottom: 0.25rem solid $primary;
+    border-bottom: 0.25rem solid $border;
 
     h1 {
       flex: 1;
