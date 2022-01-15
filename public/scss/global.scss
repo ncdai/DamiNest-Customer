@@ -5,16 +5,28 @@
   --banner-height: 88px;
   --navbar-primary-height: 56px;
   --header-height: 144px;
+
+  --bs-font-sans-serif: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+    Cantarell, "Helvetica Neue", sans-serif;
 }
 
 body {
-  font-family: $fontFamilyBody;
   background-color: #fafbfb;
 }
 
 a,
 a:hover {
   text-decoration: none;
+}
+
+.form-group {
+  .error,
+  div.is-invalid {
+    width: 100%;
+    margin-top: 0.5rem;
+    color: #e74c3c;
+    font-size: 0.875em;
+  }
 }
 
 .btn-daminest {

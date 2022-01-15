@@ -238,6 +238,12 @@ const postResetPassword = async (req, res) => {
   }
 }
 
+const checkEmail = async (req, res) => {
+  const { email } = req.body
+  const isExists = await UserModel.find({ email }).count() > 0
+  res.json(!isExists)
+}
+
 module.exports = {
   getRegister,
   postRegister,
@@ -253,5 +259,7 @@ module.exports = {
   postForgotPassword,
 
   getResetPassword,
-  postResetPassword
+  postResetPassword,
+
+  checkEmail
 }
