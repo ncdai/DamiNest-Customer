@@ -270,10 +270,12 @@ h1.page-heading {
       }
 
       &.search {
-        // background-color: $secondary;
-        // color: $secondary;
-        border: 1px solid $secondary;
-        // background: #fafafa;
+        background: #f5f5f5;
+
+        &:hover {
+          background-color: $primary;
+          color: $secondary;
+        }
       }
     }
   }
@@ -294,6 +296,7 @@ h1.page-heading {
     height: var(--navbar-primary-height);
 
     a {
+      position: relative;
       height: 3.5rem;
       display: flex;
       align-items: center;
@@ -305,9 +308,28 @@ h1.page-heading {
       font-size: 1rem;
       transition: all 0.25s ease-in-out;
 
+      &::before {
+        content: "";
+        position: absolute;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50rem;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: $secondary;
+        opacity: 0;
+        z-index: -1;
+        transition: all 0.25s ease-in-out;
+      }
+
       &.active,
       &:hover {
         color: $primary;
+
+        &::before {
+          opacity: 0.1;
+        }
       }
     }
   }

@@ -2,6 +2,7 @@
 
 #product-search-page {
   .col-filter {
+    position: -webkit-sticky; /* Required for Safari */
     position: sticky;
     top: var(--navbar-primary-height);
 
