@@ -44,4 +44,12 @@ $(document).ready(function () {
   });
 
   updateCartBadge();
+
+  const searchModal = $('#searchModal');
+  const searchInput = $('#global-input-search');
+
+  searchModal.on('shown.bs.modal', function () {
+    searchInput.focus();
+    searchInput.select();
+  });
 });

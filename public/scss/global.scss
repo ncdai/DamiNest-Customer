@@ -233,7 +233,6 @@ h1.page-heading {
       height: 2.5rem;
       align-items: center;
       justify-content: center;
-      background: yellow;
       border-radius: 50rem;
       transition: all 0.25s ease-in-out;
 
@@ -256,6 +255,13 @@ h1.page-heading {
           background-color: $secondary;
           color: $primary;
         }
+      }
+
+      &.search {
+        // background-color: $secondary;
+        // color: $secondary;
+        border: 1px solid $secondary;
+        // background: #fafafa;
       }
     }
   }
@@ -781,4 +787,65 @@ input.hide-spin-button::-webkit-inner-spin-button {
 /* Firefox */
 input.hide-spin-button[type="number"] {
   -moz-appearance: textfield;
+}
+
+#searchModal {
+  .modal-content {
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      background: url(../images/pattern.png) no-repeat bottom;
+      background-size: 100% auto;
+      opacity: 0.5;
+    }
+  }
+
+  .modal-header {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .modal-body {
+    padding: 2rem;
+    padding-top: 0;
+
+    .modal-search-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+
+      i {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        margin-bottom: 1rem;
+        background: $secondary;
+        color: $primary;
+        border-radius: 50rem;
+      }
+
+      h5 {
+        margin: 0;
+        line-height: normal;
+        font-family: $fontFamilySecondary;
+        font-size: 1.5rem;
+        color: $primary;
+        text-transform: uppercase;
+      }
+    }
+  }
 }

@@ -101,8 +101,9 @@ const search = async (req, res) => {
     sort = commonUtil.convertSortQueryStringToMongooseSort(req.query.sort)
   }
 
-  const data = await ProductModel.paginate(query, {
+  const result = await ProductModel.paginate(query, {
     page: req.query?.page || 1,
+    limit: 3,
     sort,
     populate: {
       path: 'categoryId ownerId',
@@ -110,9 +111,27 @@ const search = async (req, res) => {
     }
   })
 
+  const categories = await ProductCategoryModel.find({})
+
   console.log({ query, sort })
 
-  res.json(data)
+  res.render('products/search', {
+    categories,
+
+    products: result.docs,
+    page: result.page,
+    totalPages: result.totalPages,
+
+    pageUrl: req.originalUrl,
+
+    formValues: {
+      keyword: req.query?.keyword,
+      categoryId: req.query?.categoryId,
+      priceMin: req.query?.priceMin,
+      priceMax: req.query?.priceMax,
+      sort: req.query?.sort
+    }
+  })
 }
 
 const view = async (req, res, next) => {
