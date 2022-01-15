@@ -21,7 +21,7 @@ function currencyFormatter (value) {
 
 $(document).ready(function () {
   $('#dropdown-item-logout').on('click', handleLogoutClick);
-  $('#list-group-item-logout').on('click', handleLogoutClick);
+  $('#sidebar-profile [itemid="logout"]').on('click', handleLogoutClick);
 
   // Add smooth scrolling to all links
   $("a").on('click', function (event) {
