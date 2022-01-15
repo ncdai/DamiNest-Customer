@@ -80,7 +80,7 @@
         <%- include(views + "/products/components/product-property-item", { label: "Xuất xứ", value: product.origin }); %>
 
         <div class="property-item">
-          <label class="property-item-label">Sản phẩm của Công Ty TNHH MTV Yến Sào DaniNest</label>
+          <label class="property-item-label">Sản phẩm của Công Ty TNHH MTV Yến Sào DamiNest</label>
           <span class="property-item-value">Địa chỉ : KTX Khu B - ĐHQG HCM, Linh Trung, Thủ Đức, HCM</span>
           <span class="property-item-value">Hotline : 0777 888 148</span>
         </div>
@@ -116,6 +116,8 @@
           Khách hàng nhận xét
           <span></span>
         </h3>
+
+        <%- include(views + '/products/components/reviews-summary'); %>
 
         <div class="reviews">
           <%- include(views + '/products/components/review-item'); %>

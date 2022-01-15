@@ -1,0 +1,52 @@
+<div class="reviews-summary">
+  <div class="row">
+    <div class="col-12 col-md-4">
+      <div class="rs-box rs-overall">
+        <span class="rs-overall-label">Đánh giá trung bình</span>
+
+        <span class="rs-overall-avg">5/5</span>
+
+        <%- include(views + "/products/components/rating-stars", {
+          totalRatings: 10,
+          ratingAvg: 5,
+          hideAvgAndTotal: true
+        }); %>
+
+        <span class="rs-overall-total">2 nhận xét</span>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <div class="rs-box rs-details">
+        <% [5, 4, 3, 2, 1].forEach(function (item) { %>
+          <div class="rs-details-item">
+            <span class="rs-details-item-label">
+              <span><%= item %></span>
+              <i class="fas fa-star"></i>
+            </span>
+
+            <div class="rs-details-item-progress progress">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                style="width: 25%"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+
+            <span class="rs-details-item-percent">25%</span>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <div class="rs-box rs-write-review">
+        <span class="rs-write-review-label">Nhận xét sản phẩm</span>
+        <button class="btn-daminest primary">Viết nhận xét</button>
+      </div>
+    </div>
+  </div>
+</div>

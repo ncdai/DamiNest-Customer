@@ -216,7 +216,7 @@
       }
 
       &-label {
-        font-weight: $fontBold;
+        font-weight: $fontMedium;
         flex: 1;
         margin-bottom: 0.5rem;
         line-height: normal;
@@ -233,23 +233,27 @@
 
     &-item {
       flex: 1;
+
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      background: #fafafa;
+      justify-content: center;
+
       padding: 1rem;
       border-radius: $borderRadius;
+      background: #fafafa;
 
       i {
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.5rem;
+
         width: 3rem;
         height: 3rem;
         margin-bottom: 1rem;
         border-radius: 50rem;
+
+        font-size: 1.5rem;
         color: $primary;
         background: $secondary;
       }
@@ -264,6 +268,114 @@
     margin-top: 2rem;
   }
 
+  .reviews-summary {
+    margin-bottom: 2rem;
+
+    .rs-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      height: 100%;
+      padding: 1rem;
+      border-radius: $borderRadius;
+
+      background: #fafafa;
+    }
+
+    .rs-overall {
+      align-items: center;
+
+      &-label {
+        font-weight: $fontMedium;
+        margin-bottom: 1rem;
+      }
+
+      &-avg {
+        margin-bottom: 1rem;
+        font-size: 2rem;
+        font-weight: $fontBold;
+        line-height: normal;
+        color: $primary;
+      }
+
+      // products/components/rating-stars
+      .rating-stars {
+        font-size: 1.125rem;
+      }
+
+      &-total {
+        margin-top: 1rem;
+        color: $textGray;
+      }
+    }
+
+    .rs-details {
+      &-item {
+        display: flex;
+        align-items: center;
+
+        &:not(:last-child) {
+          margin-bottom: 0.5rem;
+        }
+
+        &-label {
+          display: flex;
+          align-items: center;
+          height: 24px;
+          margin-right: 1rem;
+
+          font-weight: $fontMedium;
+          line-height: normal;
+
+          span {
+            width: 0.875rem;
+          }
+
+          i {
+            margin-top: -1px;
+            color: #dfdfdf;
+          }
+        }
+
+        &-progress {
+          flex: 1;
+          height: 0.5rem;
+
+          .progress-bar {
+            background: $success;
+          }
+        }
+
+        &-percent {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          width: 3rem;
+          height: 1.5rem;
+          margin-left: 1rem;
+          border-radius: 4px;
+
+          font-size: 0.875rem;
+          font-weight: $fontMedium;
+          color: $textGray;
+          background: #eee;
+        }
+      }
+    }
+
+    .rs-write-review {
+      align-items: center;
+
+      &-label {
+        display: block;
+        margin-bottom: 1rem;
+        font-weight: $fontMedium;
+      }
+    }
+  }
+
   .reviews {
     .review-item {
       &:not(:last-child) {
@@ -276,7 +388,7 @@
         display: flex;
         align-items: center;
 
-        .rv-owner-avatar {
+        &-avatar {
           display: flex;
           width: 3rem;
           height: 3rem;
@@ -285,7 +397,7 @@
           background: $primary;
         }
 
-        .rv-owner-info {
+        &-info {
           flex: 1;
 
           .rv-owner-name {
