@@ -123,7 +123,10 @@ const getVerifyEmail = async (req, res) => {
     const { token } = req.query
 
     if (!token) {
-      res.boom.badRequest('Vui lòng nhập Token')
+      res.render('auth/verify-email', {
+        success: false,
+        errorMessage: 'Vui lòng nhập Token'
+      })
       return
     }
 
@@ -133,19 +136,28 @@ const getVerifyEmail = async (req, res) => {
     const emailId = decoded?.emailId
 
     if (!userId || !emailId) {
-      res.boom.badRequest('Mã xác nhận không hợp lệ')
+      res.render('auth/verify-email', {
+        success: false,
+        errorMessage: 'Mã xác nhận không hợp lệ'
+      })
       return
     }
 
     const user = await UserModel.findOne({ _id: userId, emailId }).exec()
 
     if (!user) {
-      res.boom.badRequest('Mã xác nhận không hợp lệ')
+      res.render('auth/verify-email', {
+        success: false,
+        errorMessage: 'Mã xác nhận không hợp lệ'
+      })
       return
     }
 
     if (user.isVerified) {
-      res.boom.badRequest('Tài khoản đã được xác minh')
+      res.render('auth/verify-email', {
+        success: false,
+        errorMessage: 'Tài khoản đã được xác minh'
+      })
       return
     }
 
@@ -154,14 +166,20 @@ const getVerifyEmail = async (req, res) => {
       .select('-password -emailId -resetPasswordId')
       .exec()
 
-    res.json(true)
+    res.render('auth/verify-email', {
+      success: true,
+      email: user.email
+    })
   } catch (err) {
-    res.boom.badRequest('Mã xác nhận không hợp lệ')
+    res.render('auth/verify-email', {
+      success: false,
+      errorMessage: 'Mã xác nhận không hợp lệ'
+    })
   }
 }
 
 const getForgotPassword = async (req, res) => {
-  res.send('Reset Password Page')
+  res.render('auth/forgot-password')
 }
 
 const postForgotPassword = async (req, res) => {
@@ -202,7 +220,9 @@ const postForgotPassword = async (req, res) => {
 }
 
 const getResetPassword = async (req, res) => {
-  res.send('Reset Password Page')
+  res.render('auth/reset-password', {
+    token: req.query?.token
+  })
 }
 
 const postResetPassword = async (req, res) => {
