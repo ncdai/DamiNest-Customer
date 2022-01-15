@@ -25,7 +25,7 @@ const createOrder = async (req, res, next) => {
 
       return {
         productId,
-        title: product.title,
+        name: product.name,
         featuredImage: product.featuredImage,
         price: product.price,
         discount: product.discount,

@@ -69,6 +69,10 @@ app.use(passport.session())
 app.use(passportMiddleware.injectLocals())
 
 app.use((req, res, next) => {
+  res.locals.currencyFormatter = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND'
+  })
   res.locals.queryString = queryString
   res.locals.searchKeyword = req.query?.keyword || ''
   next()

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 const OrderSchema = mongoose.Schema({
   ownerId: {
@@ -23,7 +24,7 @@ const OrderSchema = mongoose.Schema({
 
   products: [{
     productId: String,
-    title: String,
+    name: String,
     featuredImage: String,
     price: Number,
     discount: Number,
@@ -61,5 +62,7 @@ const OrderSchema = mongoose.Schema({
 }, {
   timestamps: true
 })
+
+OrderSchema.plugin(mongoosePaginate)
 
 module.exports = mongoose.model('Order', OrderSchema, 'orders')

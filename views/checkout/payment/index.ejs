@@ -131,7 +131,7 @@
                 <div class="clearfix-32"></div>
 
                 <div class="d-grid">
-                  <button type="submit" class="btn-daminest primary">Đặt hàng</button>
+                  <button type="submit" class="btn-daminest primary" id="btn-submit" data-loading-text="Đang xử lí">Đặt hàng</button>
                 </div>
               </form>
             </div>
@@ -192,6 +192,8 @@
           paymentMethod: paymentMethod
         };
 
+        $('#btn-submit').bootstrapBtn('loading');
+
         $.ajax({
           url: '/checkout/create-order',
           type: 'POST',
@@ -210,6 +212,7 @@
           error: function (error) {
             console.log('Checkout -> Error', error);
             toastr.error('Lỗi đặt hàng');
+            $('#btn-submit').bootstrapBtn('reset');
 
             setTimeout(function () {
               window.location = '/checkout/result?success=false';

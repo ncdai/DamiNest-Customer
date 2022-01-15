@@ -5,13 +5,14 @@
   <%- include(layouts + '/head'); %>
 
   <link rel="stylesheet" href="/css/auth/index.css">
-  <link rel="stylesheet" href="/css/profile/index.css">
 </head>
 
-<body id="profile-page">
+<body id="update-profile-page">
   <%- include(layouts + '/header'); %>
 
   <main>
+    <div class="clearfix-32"></div>
+
     <div class="container">
       <div class="row gx-8">
         <div class="col-12 col-md-3">
@@ -20,12 +21,12 @@
           </div>
         </div>
         <div class="col-12 col-md-9">
-          <form class="form-auth" id="formUpdateProfile">
-            <h1 class="page-heading">Cập nhật thông tin</h1>
+          <h1 class="page-heading">Cập nhật thông tin</h1>
 
-            <div>
+          <form id="formUpdateProfile">
+            <div class="mb-3">
               <label for="email" class="form-label">Email</label>
-              <div class="input-group mb-3">
+              <div class="input-group">
                 <input type="text" class="form-control" id="email" placeholder="Email" aria-describedby="<%= currentUser.isVerified ? "isVerified" : "btnSendVerifyEmail" %>" value="<%= currentUser.email %>" disabled>
 
                 <% if (currentUser.isVerified) { %>
@@ -63,6 +64,8 @@
         </div>
       </div>
     </div>
+
+    <div class="clearfix-32"></div>
   </main>
 
   <%- include(layouts + '/foot'); %>

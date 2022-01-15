@@ -111,6 +111,17 @@
     }
 
     function renderCartItems (items) {
+      const hasData = Array.isArray(items) && items.length > 0;
+
+      if (!hasData) {
+        $('#cart-items').html(`
+          <div class="alert alert-warning mb-0" role="alert">
+            Không có sản phẩm nào trong giỏ hàng của bạn.
+          </div>
+        `);
+        return;
+      }
+
       $('#cart-items').html(items.map((item) => {
         return `
           <div class="cart-product-item">

@@ -54,18 +54,18 @@
                   <form id="form-shipping" method="POST">
                     <div class="mb-3">
                       <label for="fullName" class="form-label">Họ tên</label>
-                      <input type="text" class="form-control" name="fullName" id="fullName" placeholder="Họ và tên" value="<%= currentUser.fullName %>" required>
+                      <input type="text" class="form-control" name="fullName" id="fullName" placeholder="Họ và tên" value="<%= currentUser?.fullName %>" required>
                     </div>
 
                     <div class="mb-3">
                       <label for="phoneNumber" class="form-label">Điện thoại</label>
-                      <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="Điện thoại" aria-describedby="phoneHelp" required>
+                      <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="Điện thoại" value="<%= currentUser?.phoneNumber %>" aria-describedby="phoneHelp" required>
                       <div id="phoneHelp" class="form-text">Chúng tôi sẽ liên hệ với quý khách để xác nhận đơn hàng.</div>
                     </div>
 
                     <div class="mb-3">
                       <label for="shippingAddress" class="form-label">Địa chỉ nhận hàng</label>
-                      <input type="text" class="form-control" name="shippingAddress" id="shippingAddress" placeholder="Địa chỉ nhận hàng" aria-describedby="shippingAddressHelp" required>
+                      <input type="text" class="form-control" name="shippingAddress" id="shippingAddress" placeholder="Địa chỉ nhận hàng" value="<%= currentUser?.address %>" aria-describedby="shippingAddressHelp" required>
                       <div id="shippingAddressHelp" class="form-text">Hãy nhập địa chỉ chi tiết để Shipper dễ dàng giao hàng cho bạn.</div>
                     </div>
 

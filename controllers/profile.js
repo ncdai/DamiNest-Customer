@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
+const dayjs = require('dayjs')
 
-const { UserModel } = require('../models')
+const { UserModel, OrderModel } = require('../models')
 
 const index = (req, res) => {
   res.render('profile/me')
@@ -78,7 +79,18 @@ const patchChangePassword = async (req, res) => {
 }
 
 const getPurchases = async (req, res) => {
-  res.render('profile/purchases')
+  const page = req.query?.page
+  const result = await OrderModel.paginate({ ownerId: req.user._id }, { page: page || 1, limit: 1 })
+
+  res.locals.dayjs = dayjs
+
+  res.render('profile/purchases', {
+    purchases: result.docs,
+    page: result.page,
+    totalPages: result.totalPages,
+
+    pageUrl: req.originalUrl
+  })
 }
 
 module.exports = {
