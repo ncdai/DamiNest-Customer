@@ -80,7 +80,7 @@ const patchChangePassword = async (req, res) => {
 
 const getPurchases = async (req, res) => {
   const page = req.query?.page
-  const result = await OrderModel.paginate({ ownerId: req.user._id }, { page: page || 1, limit: 1 })
+  const result = await OrderModel.paginate({ ownerId: req.user._id }, { page: page || 1 })
 
   res.locals.dayjs = dayjs
 

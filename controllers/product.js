@@ -103,7 +103,6 @@ const search = async (req, res) => {
 
   const result = await ProductModel.paginate(query, {
     page: req.query?.page || 1,
-    limit: 3,
     sort,
     populate: {
       path: 'categoryId ownerId',
@@ -112,8 +111,6 @@ const search = async (req, res) => {
   })
 
   const categories = await ProductCategoryModel.find({})
-
-  console.log({ query, sort })
 
   res.render('products/search', {
     categories,
