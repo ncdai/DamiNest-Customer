@@ -85,7 +85,7 @@ const postSendVerifyEmail = async (req, res) => {
     const userId = req.user._id
     const emailId = nanoid()
 
-    const user = await UserModel.findByIdAndUpdate(userId, { $set: { emailId } }, { new: true })
+    const user = await UserModel.findByIdAndUpdate(userId, { $set: { emailId } }, { new: true }).exec()
 
     if (!user) {
       res.boom.badRequest('Tài khoản không tồn tại')
@@ -260,7 +260,7 @@ const postResetPassword = async (req, res) => {
 
 const checkEmail = async (req, res) => {
   const { email } = req.body
-  const isExists = await UserModel.find({ email }).count() > 0
+  const isExists = await UserModel.find({ email }).count().exec() > 0
   res.json(!isExists)
 }
 

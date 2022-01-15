@@ -103,6 +103,7 @@ const search = async (req, res) => {
 
   const result = await ProductModel.paginate(query, {
     page: req.query?.page || 1,
+    limit: config.PAGE_LIMIT,
     sort,
     populate: {
       path: 'categoryId ownerId',
@@ -110,7 +111,7 @@ const search = async (req, res) => {
     }
   })
 
-  const categories = await ProductCategoryModel.find({})
+  const categories = await ProductCategoryModel.find({}).exec()
 
   res.render('products/search', {
     categories,
@@ -131,7 +132,7 @@ const search = async (req, res) => {
   })
 }
 
-const view = async (req, res, next) => {
+const getView = async (req, res, next) => {
   const { productId } = req.params
 
   const isValid = mongoose.isValidObjectId(productId)
@@ -139,7 +140,7 @@ const view = async (req, res, next) => {
     return next(new Error('Mã sản phẩm không hợp lệ!'))
   }
 
-  const product = await ProductModel.findById(productId)
+  const product = await ProductModel.findById(productId).exec()
   if (!product) {
     return next(new Error('Không tìm thấy sản phẩm!'))
   }
@@ -183,6 +184,6 @@ const getReviews = async (req, res) => {
 module.exports = {
   index,
   search,
-  view,
+  getView,
   getReviews
 }

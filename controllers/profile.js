@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const dayjs = require('dayjs')
+const config = require('../config')
 
 const { UserModel, OrderModel } = require('../models')
 
@@ -56,7 +57,7 @@ const patchChangePassword = async (req, res) => {
     const userId = req.user._id
     const { currentPassword, newPassword } = req.body
 
-    const user = await UserModel.findById(userId)
+    const user = await UserModel.findById(userId).exec()
 
     const validate = await user.isValidPassword(currentPassword)
 
@@ -80,7 +81,12 @@ const patchChangePassword = async (req, res) => {
 
 const getPurchases = async (req, res) => {
   const page = req.query?.page
-  const result = await OrderModel.paginate({ ownerId: req.user._id }, { page: page || 1 })
+  const result = await OrderModel.paginate({
+    ownerId: req.user._id
+  }, {
+    page: page || 1,
+    limit: config.PAGE_LIMIT
+  })
 
   res.locals.dayjs = dayjs
 

@@ -52,7 +52,7 @@ const createOrder = async (req, res, next) => {
       newOrder.save(),
       UserModel.findByIdAndUpdate(req.user._id, {
         $set: { cart: [] }
-      })
+      }).exec()
     ])
 
     res.json(order)

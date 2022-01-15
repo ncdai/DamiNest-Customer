@@ -4,7 +4,7 @@ const postReview = async (req, res) => {
   try {
     const { productId, rating, content } = req.body
 
-    const product = await ProductModel.findById(productId)
+    const product = await ProductModel.findById(productId).exec()
 
     if (!product) {
       res.boom.badRequest()

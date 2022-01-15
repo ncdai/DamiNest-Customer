@@ -1,7 +1,10 @@
 const mongoose = require('mongoose')
 
 const productCategorySchema = mongoose.Schema({
-  name: String
+  name: {
+    type: String,
+    required: true
+  }
 }, {
   timestamps: true
 })

@@ -21,7 +21,7 @@ const deleteCategories = async (req, res) => {
 }
 
 const getCategories = async () => {
-  const categories = ProductCategoryModel.find()
+  const categories = ProductCategoryModel.find().exec()
   return categories
 }
 

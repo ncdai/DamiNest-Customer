@@ -41,7 +41,7 @@ const loginStrategy = new LocalStrategy(
   },
   async (req, email, password, done) => {
     try {
-      const user = await UserModel.findOne({ email })
+      const user = await UserModel.findOne({ email }).exec()
 
       if (!user) {
         return done(null, false, { message: 'Incorrect username' })
@@ -63,7 +63,7 @@ const loginStrategy = new LocalStrategy(
           $set: {
             cart
           }
-        })
+        }).exec()
       }
 
       return done(null, user)
@@ -77,7 +77,7 @@ const serializeUser = (user, done) => done(null, user._id)
 
 const deserializeUser = async (id, done) => {
   try {
-    const user = await UserModel.findById(id)
+    const user = await UserModel.findById(id).exec()
     return done(null, user)
   } catch (error) {
     return done(error)
