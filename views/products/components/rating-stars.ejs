@@ -9,6 +9,8 @@ const r = starPercentRounded % 20;
 const totalStarActive = (starPercentRounded - r) / 20;
 const totalStarHalf = r / 20;
 
+const _hideAvgAndTotal = typeof hideAvgAndTotal !== "undefined" && hideAvgAndTotal;
+
 %>
 
 <div class="rating">
@@ -26,10 +28,12 @@ const totalStarHalf = r / 20;
     <% } %>
   </div>
 
-  <% if (totalRatings > 0) { %>
-    <span class="rating-avg"><%= ratingAvg %></span>
-    <span class="rating-total">(<%= totalRatings %> đánh giá)</span>
-  <% } else { %>
-    <span class="rating-total">Chưa có đánh giá</span>
+  <% if (!_hideAvgAndTotal) { %>
+    <% if (totalRatings > 0) { %>
+      <span class="rating-avg"><%= ratingAvg %></span>
+      <span class="rating-total">(<%= totalRatings %> đánh giá)</span>
+    <% } else { %>
+      <span class="rating-total">Chưa có đánh giá</span>
+    <% } %>
   <% } %>
 </div>

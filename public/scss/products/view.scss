@@ -188,7 +188,7 @@
     }
   }
 
-  .properties {
+  .section {
     background: #fff;
     padding: 1rem;
     margin-top: 1rem;
@@ -199,7 +199,9 @@
       padding: 2rem;
       margin-top: 2rem;
     }
+  }
 
+  .properties {
     .property-item {
       display: flex;
       margin-bottom: 1rem;
@@ -260,5 +262,71 @@
 
   .related-products {
     margin-top: 2rem;
+  }
+
+  .reviews {
+    .review-item {
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid $border;
+      }
+
+      .rv-owner {
+        display: flex;
+        align-items: center;
+
+        .rv-owner-avatar {
+          display: flex;
+          width: 3rem;
+          height: 3rem;
+          margin-right: 1rem;
+          border-radius: 50rem;
+          background: $primary;
+        }
+
+        .rv-owner-info {
+          flex: 1;
+
+          .rv-owner-name {
+            font-weight: $fontMedium;
+          }
+
+          .rv-ratings {
+            display: flex;
+            align-items: center;
+            margin-top: 0.25rem;
+
+            .rv-purchased {
+              margin-left: 1rem;
+              line-height: normal;
+              color: $textSuccess;
+            }
+          }
+        }
+      }
+
+      .rv-content {
+        display: inline-flex;
+        align-items: center;
+        max-width: 100%;
+        min-height: 2.5rem;
+
+        margin-top: 1rem;
+        margin-bottom: 0;
+        padding: 0.5rem 1rem;
+
+        border-radius: 0.5rem;
+        background: #f5f5f5;
+      }
+
+      .rv-created-at {
+        display: block;
+        margin-top: 0.5rem;
+        margin-left: 1rem;
+        line-height: normal;
+        color: $textGray;
+      }
+    }
   }
 }
