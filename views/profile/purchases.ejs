@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <%- include(layouts + '/head'); %>
+
+  <link rel="stylesheet" href="/css/auth/index.css">
+  <link rel="stylesheet" href="/css/profile/index.css">
+</head>
+
+<body id="profile-page">
+  <%- include(layouts + '/header'); %>
+
+  <main>
+    <div class="container">
+      <div class="row gx-8">
+        <div class="col-12 col-md-3">
+          <%- include(views + '/profile/components/sidebar'); %>
+        </div>
+
+        <div class="col-12 col-md-9">
+          <h1 class="page-heading">Đơn mua</h1>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <%- include(layouts + '/foot'); %>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#sidebar-profile [itemid="purchases"]').addClass('active');
+    });
+  </script>
+</body>
+
+</html>

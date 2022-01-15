@@ -77,6 +77,10 @@ const patchChangePassword = async (req, res) => {
   }
 }
 
+const getPurchases = async (req, res) => {
+  res.render('profile/purchases')
+}
+
 module.exports = {
   index,
   patchMe,
@@ -84,5 +88,7 @@ module.exports = {
   updateCart,
 
   getChangePassword,
-  patchChangePassword
+  patchChangePassword,
+
+  getPurchases
 }

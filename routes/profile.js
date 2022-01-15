@@ -11,4 +11,6 @@ router.put('/cart', profileController.updateCart)
 router.get('/change-password', profileController.getChangePassword)
 router.patch('/change-password', profileController.patchChangePassword)
 
+router.get('/purchases', profileController.getPurchases)
+
 module.exports = router
