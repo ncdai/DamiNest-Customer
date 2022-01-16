@@ -5,5 +5,6 @@ const { productReviewController } = require('../controllers')
 const { authMiddleware } = require('../middlewares')
 
 router.post('/', authMiddleware.requiredLoginWithBoom, productReviewController.postReview)
+router.post('/check-can-review', productReviewController.postCheckCanReview)
 
 module.exports = router

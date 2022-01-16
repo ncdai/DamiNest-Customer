@@ -75,6 +75,7 @@ app.use((req, res, next) => {
   })
   res.locals.queryString = queryString
   res.locals.searchKeyword = req.query?.keyword || ''
+  res.locals.currentUrl = req.originalUrl
   next()
 })
 

@@ -19,6 +19,47 @@ function currencyFormatter (value) {
   }).format(value);
 }
 
+function getRatingStarsHTML ({ totalRatings, ratingAvg, hideAvgAndTotal }) {
+  const totalStar = 5;
+  const starPercent = (ratingAvg / totalStar) * 100;
+  const starPercentRounded = (Math.round(starPercent / 10) * 10);
+
+  const r = starPercentRounded % 20;
+
+  const totalStarActive = (starPercentRounded - r) / 20;
+  const totalStarHalf = r / 20;
+
+  const _hideAvgAndTotal = typeof hideAvgAndTotal !== "undefined" && hideAvgAndTotal;
+
+  return `
+    <div class="rating">
+      <div class="rating-stars">
+        ${_.range(1, totalStarActive + 1).map(function (item) {
+          return `
+            <i class="fas fa-star active"></i>
+          `
+        }).join('')}
+
+        ${totalStarHalf != 0 ? `<i class="fas fa-star-half-alt active"></i>` : ''}
+
+        ${_.range(totalStarActive + 1 + Math.round(totalStarHalf), 5 + 1).map(function (item) {
+          return `<i class="fas fa-star"></i>`
+        }).join('')}
+      </div>
+
+      ${!_hideAvgAndTotal
+        ? (totalRatings > 0
+          ? `
+            <span class="rating-avg">${ratingAvg}</span>
+            <span class="rating-total">(${totalRatings} đánh giá)</span>
+          `
+          : `<span class="rating-total">Chưa có đánh giá</span>`
+        )
+        : ''}
+    </div>
+  `;
+}
+
 $(document).ready(function () {
   $('#dropdown-item-logout').on('click', handleLogoutClick);
   $('#sidebar-profile [itemid="logout"]').on('click', handleLogoutClick);

@@ -26,6 +26,7 @@
     "express-session": "^1.17.2",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
     "mailgun-js": "^0.22.0",
     "mongoose": "^6.0.13",
     "mongoose-paginate-v2": "^1.4.2",

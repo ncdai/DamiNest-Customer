@@ -111,6 +111,8 @@ const search = async (req, res) => {
     }
   })
 
+  console.log('result', result.docs)
+
   const categories = await ProductCategoryModel.find({}).exec()
 
   res.render('products/search', {
@@ -163,12 +165,14 @@ const getReviews = async (req, res) => {
     }
 
     const data = await ProductReviewModel.paginate({
-      productId
+      productId,
+      published: true
     }, {
       page: req.query?.page || 1,
+      limit: req.query?.limit,
       populate: {
         path: 'ownerId',
-        select: '-password'
+        select: '-password -cart -emailId -resetPasswordId -phoneNumber -address'
       },
       sort: {
         updatedAt: 'desc'

@@ -440,5 +440,20 @@
         color: $textGray;
       }
     }
+
+    .loading {
+      background: #fafafa;
+      padding: 2rem;
+      border-radius: $borderRadius;
+    }
+  }
+
+  #reviews-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+
+    padding-top: 2rem;
+    border-top: 1px solid $border;
   }
 }

@@ -27,6 +27,13 @@ const productSchema = mongoose.Schema({
     type: Number,
     default: 0
   },
+  ratingStat: {
+    1: { type: Number, default: 0 },
+    2: { type: Number, default: 0 },
+    3: { type: Number, default: 0 },
+    4: { type: Number, default: 0 },
+    5: { type: Number, default: 0 }
+  },
   totalRatings: {
     type: Number,
     default: 0
@@ -83,6 +90,10 @@ const productSchema = mongoose.Schema({
 
 productSchema.plugin(mongoosePaginate)
 
-productSchema.index({ name: 'text', description: 'text', price: 1 })
+productSchema.index({
+  name: 'text',
+  description: 'text',
+  price: 1
+})
 
 module.exports = mongoose.model('Product', productSchema, 'products')
