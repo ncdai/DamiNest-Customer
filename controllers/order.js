@@ -1,4 +1,8 @@
+const _ = require('lodash')
+const mongoose = require('mongoose')
 const { ProductModel, OrderModel, UserModel } = require('../models')
+
+const { mailUtil } = require('../utils')
 
 const createOrder = async (req, res, next) => {
   try {
@@ -61,6 +65,59 @@ const createOrder = async (req, res, next) => {
   }
 }
 
+const sendOrderEmail = async (status, order) => {
+  await mailUtil.sendMail({
+    from: 'DamiNest Support',
+    to: order.email,
+    subject: `Đơn hàng ${order._id}`,
+    content: `Trạng thái đơn : ${status}`
+  })
+}
+
+const updateOrderStatus = async (req, res) => {
+  try {
+    const { orderId } = req.params
+    const { pushNotification, status, reasonsForRejection } = req.body
+
+    const isValidData = _.isBoolean(pushNotification) && ['PENDING', 'PROCESSING', 'TRANSFERRING', 'DONE', 'REJECTED'].includes(status)
+    if (!isValidData) {
+      res.boom.badData('Dữ liệu không hợp lệ;')
+      return
+    }
+
+    const order = await OrderModel.findByIdAndUpdate(orderId, {
+      $set: {
+        pushNotification,
+        reasonsForRejection,
+        status
+      }
+    }, { new: true }).exec()
+
+    if (!order) {
+      res.boom.badData('Đơn hàng không tồn tại.')
+      return
+    }
+
+    if (pushNotification) {
+      sendOrderEmail(status, order)
+    }
+
+    if (status === 'DONE') {
+      const products = order.products
+      products.forEach((product) => {
+        if (mongoose.isValidObjectId(product.productId)) {
+          ProductModel.findByIdAndUpdate(product.productId, { $inc: { totalPurchases: 1 } }).exec()
+        }
+      })
+    }
+
+    res.json(order)
+  } catch (error) {
+    res.boom.badRequest(error.message)
+  }
+}
+
 module.exports = {
-  createOrder
+  createOrder,
+  updateOrderStatus
 }

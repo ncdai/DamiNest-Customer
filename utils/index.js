@@ -1,9 +1,9 @@
 const commonUtil = require('./common')
 const databaseUtil = require('./database')
-const mailUntil = require('./mail')
+const mailUtil = require('./mail')
 
 module.exports = {
   commonUtil,
   databaseUtil,
-  mailUntil
+  mailUtil
 }

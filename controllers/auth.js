@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
 const { UserModel } = require('../models')
-const { mailUntil } = require('../utils')
+const { mailUtil } = require('../utils')
 const config = require('../config')
 
 const getRegister = (req, res, next) => {
@@ -106,7 +106,7 @@ const postSendVerifyEmail = async (req, res) => {
       { expiresIn: '24h' }
     )
 
-    await mailUntil.sendMail({
+    await mailUtil.sendMail({
       to: req.user.email,
       subject: 'Xác minh tài khoản',
       content: `<a href="http://localhost:8000/auth/verify-email?token=${token}">Click here</a>`
@@ -207,7 +207,7 @@ const postForgotPassword = async (req, res) => {
 
     await UserModel.findByIdAndUpdate(userId, { $set: { resetPasswordId } }).exec()
 
-    await mailUntil.sendMail({
+    await mailUtil.sendMail({
       to: email,
       subject: 'Đặt lại mật khẩu',
       content: `<a href="http://localhost:8000/auth/reset-password?token=${token}">Click here</a>`
