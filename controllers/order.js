@@ -42,6 +42,7 @@ const createOrder = async (req, res, next) => {
 
     const newOrder = new OrderModel({
       ownerId: req.user._id,
+      email: req.user.email,
       fullName: body.fullName,
       phoneNumber: body.phoneNumber,
       shippingAddress: body.shippingAddress,
