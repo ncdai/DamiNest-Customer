@@ -14,6 +14,26 @@ const productSchema = mongoose.Schema({
     required: true
   },
 
+  productName: {
+    type: String,
+    required: true
+  },
+
+  fullName: {
+    type: String,
+    required: true
+  },
+
+  phoneNumber: {
+    type: String,
+    required: true
+  },
+
+  email: {
+    type: String,
+    required: true
+  },
+
   rating: {
     type: Number,
     default: 0

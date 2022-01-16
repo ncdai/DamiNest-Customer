@@ -9,6 +9,7 @@ const cartController = require('./cart')
 const orderController = require('./order')
 const checkoutController = require('./checkout')
 const productReviewController = require('./productReview')
+const mailController = require('./mail')
 
 module.exports = {
   aboutController,
@@ -21,5 +22,6 @@ module.exports = {
   cartController,
   orderController,
   checkoutController,
-  productReviewController
+  productReviewController,
+  mailController
 }
