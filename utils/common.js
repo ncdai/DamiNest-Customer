@@ -1,3 +1,5 @@
+const config = require('../config')
+
 const convertSortQueryStringToMongooseSort = (st) => {
   const parse = st?.split?.(':')
 
@@ -14,6 +16,16 @@ const convertSortQueryStringToMongooseSort = (st) => {
   return {}
 }
 
+const getWebAdminUrl = (path = '') => config.PUBLIC_WEB_ADMIN_URL + path
+const getWebCustomerUrl = (path = '') => config.PUBLIC_WEB_CUSTOMER_URL + path
+
+const getInternalWebCustomerUrl = (path = '') => config.INTERNAL_WEB_CUSTOMER_URL + path
+
 module.exports = {
-  convertSortQueryStringToMongooseSort
+  convertSortQueryStringToMongooseSort,
+
+  getWebAdminUrl,
+  getWebCustomerUrl,
+
+  getInternalWebCustomerUrl
 }

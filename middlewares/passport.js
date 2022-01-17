@@ -1,6 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy
 
 const { UserModel } = require('../models')
+const { authController } = require('../controllers')
 
 const registerStrategy = new LocalStrategy(
   {
@@ -26,6 +27,13 @@ const registerStrategy = new LocalStrategy(
         fullName: req.body?.fullName,
         cart
       })
+
+      // Send verify email
+      authController
+        .sendVerifyEmail(user._id)
+        .then((data) => console.log('registerStrategy -> sendVerifyEmail -> Success', data))
+        .catch((error) => console.log('registerStrategy -> sendVerifyEmail -> Error', error.message))
+
       return done(null, user)
     } catch (error) {
       done(null, false, { message: error.message })
@@ -44,13 +52,17 @@ const loginStrategy = new LocalStrategy(
       const user = await UserModel.findOne({ email }).exec()
 
       if (!user) {
-        return done(null, false, { message: 'Incorrect username' })
+        return done(null, false, { message: 'Tài khoản không tồn tại' })
+      }
+
+      if (user.isBlocked) {
+        return done(null, false, { message: 'Tài khoản đã bị khoá' })
       }
 
       const validate = await user.isValidPassword(password)
 
       if (!validate) {
-        return done(null, false, { message: 'Incorrect password' })
+        return done(null, false, { message: 'Mật khẩu không chính xác' })
       }
 
       //
@@ -59,7 +71,7 @@ const loginStrategy = new LocalStrategy(
       //
       if (['/checkout/shipping'].includes(req.query?.nextUrl)) {
         const cart = JSON.parse(req.body.cartLS) || []
-        await UserModel.findByIdAndUpdate(user._id, {
+        UserModel.findByIdAndUpdate(user._id, {
           $set: {
             cart
           }

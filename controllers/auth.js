@@ -3,10 +3,66 @@ const passport = require('passport')
 const queryString = require('query-string')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const axios = require('axios').default
 
 const { UserModel } = require('../models')
-const { mailUtil } = require('../utils')
+const { commonUtil, authUtil } = require('../utils')
 const config = require('../config')
+
+const sendVerifyEmail = async (userId) => {
+  const emailId = nanoid()
+
+  const user = await UserModel.findByIdAndUpdate(userId, { $set: { emailId } }, { new: true }).exec()
+
+  if (!user) {
+    throw new Error('Tài khoản không tồn tại')
+  }
+
+  if (user.isVerified) {
+    throw new Error('Tài khoản đã được xác minh')
+  }
+
+  const token = authUtil.getVerifyEmailToken({
+    userId,
+    emailId
+  })
+
+  const requestUrl = commonUtil.getInternalWebCustomerUrl(`/mail-service/auth/${user._id}/verify-email?token=${token}&secretKey=${config.SECRET_KEY}`)
+  axios
+    .get(requestUrl)
+    .then((res) => console.log('sendVerifyEmail -> Success'))
+    .catch((error) => console.log('sendVerifyEmail -> Error', error.message))
+
+  return true
+}
+
+const sendForgotPasswordEmail = async (email) => {
+  const user = await UserModel.findOne({ email }).exec()
+
+  if (!user) {
+    throw new Error('Tài khoản không tồn tại')
+  }
+
+  const userId = user._id
+  const resetPasswordId = nanoid()
+
+  const token = authUtil.getResetPasswordToken({
+    userId,
+    resetPasswordId
+  })
+
+  await UserModel.findByIdAndUpdate(userId, { $set: { resetPasswordId } }).exec()
+
+  const requestUrl = commonUtil.getInternalWebCustomerUrl(`/mail-service/auth/${user._id}/reset-password?token=${token}&secretKey=${config.SECRET_KEY}`)
+  axios
+    .get(requestUrl)
+    .then((res) => console.log('sendForgotPasswordEmail -> Success'))
+    .catch((error) => console.log('sendForgotPasswordEmail -> Error', error.message))
+
+  return true
+}
+
+// Router Controllers
 
 const getRegister = (req, res, next) => {
   const registerRes = req.query?.res
@@ -83,35 +139,7 @@ const getLogout = (req, res) => {
 const postSendVerifyEmail = async (req, res) => {
   try {
     const userId = req.user._id
-    const emailId = nanoid()
-
-    const user = await UserModel.findByIdAndUpdate(userId, { $set: { emailId } }, { new: true }).exec()
-
-    if (!user) {
-      res.boom.badRequest('Tài khoản không tồn tại')
-      return
-    }
-
-    if (user.isVerified) {
-      res.boom.badRequest('Tài khoản đã được xác minh')
-      return
-    }
-
-    const token = jwt.sign(
-      {
-        userId,
-        emailId
-      },
-      config.SECRET_KEY,
-      { expiresIn: '24h' }
-    )
-
-    await mailUtil.sendMail({
-      to: req.user.email,
-      subject: 'Xác minh tài khoản',
-      content: `<a href="http://localhost:8000/auth/verify-email?token=${token}">Click here</a>`
-    })
-
+    await sendVerifyEmail(userId)
     res.json(true)
   } catch (error) {
     res.boom.badRequest(error.message)
@@ -185,34 +213,7 @@ const getForgotPassword = async (req, res) => {
 const postForgotPassword = async (req, res) => {
   try {
     const { email } = req.body
-
-    const user = await UserModel.findOne({ email }).exec()
-
-    if (!user) {
-      res.boom.badRequest('Tài khoản không tồn tại')
-      return
-    }
-
-    const userId = user._id
-    const resetPasswordId = nanoid()
-
-    const token = jwt.sign(
-      {
-        userId,
-        resetPasswordId
-      },
-      config.SECRET_KEY,
-      { expiresIn: '24h' }
-    )
-
-    await UserModel.findByIdAndUpdate(userId, { $set: { resetPasswordId } }).exec()
-
-    await mailUtil.sendMail({
-      to: email,
-      subject: 'Đặt lại mật khẩu',
-      content: `<a href="http://localhost:8000/auth/reset-password?token=${token}">Click here</a>`
-    })
-
+    await sendForgotPasswordEmail(email)
     res.json(true)
   } catch (error) {
     res.boom.badRequest(error.message)
@@ -265,6 +266,9 @@ const checkEmail = async (req, res) => {
 }
 
 module.exports = {
+  sendVerifyEmail,
+  sendForgotPasswordEmail,
+
   getRegister,
   postRegister,
 
