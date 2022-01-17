@@ -53,9 +53,9 @@ const postReview = async (req, res) => {
       productId,
       ownerId: userId,
       productName: product.name,
-      fullName: req.user.fullName,
-      phoneNumber: req.user.phoneNumber,
-      email: req.user.email,
+      fullName: req.user?.fullName,
+      phoneNumber: req.user?.phoneNumber,
+      email: req.user?.email,
       rating,
       content: _.escape(content)
     })

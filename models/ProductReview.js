@@ -26,7 +26,7 @@ const productSchema = mongoose.Schema({
 
   phoneNumber: {
     type: String,
-    required: true
+    default: ''
   },
 
   email: {
