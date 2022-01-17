@@ -30,7 +30,7 @@ const _hideAvgAndTotal = typeof hideAvgAndTotal !== "undefined" && hideAvgAndTot
 
   <% if (!_hideAvgAndTotal) { %>
     <% if (totalRatings > 0) { %>
-      <span class="rating-avg"><%= ratingAvg %></span>
+      <span class="rating-avg"><%= ratingAvg?.toFixed?.(1) %></span>
       <span class="rating-total">(<%= totalRatings %> đánh giá)</span>
     <% } else { %>
       <span class="rating-total">Chưa có đánh giá</span>

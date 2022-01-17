@@ -1,8 +1,11 @@
 const _ = require('lodash')
 const mongoose = require('mongoose')
+const axios = require('axios')
+
 const { ProductModel, OrderModel, UserModel } = require('../models')
 
-const { mailUtil } = require('../utils')
+const config = require('../config')
+const { mailUtil, commonUtil } = require('../utils')
 
 const createOrder = async (req, res, next) => {
   try {
@@ -59,6 +62,12 @@ const createOrder = async (req, res, next) => {
         $set: { cart: [] }
       }).exec()
     ])
+
+    const requestUrl = commonUtil.getInternalWebCustomerUrl(`/mail-service/orders/${order._id}?status=PENDING&secretKey=${config.SECRET_KEY}`)
+    axios
+      .get(requestUrl)
+      .then((res) => console.log('sendOrderEmail -> Success'))
+      .catch((error) => console.log('sendOrderEmail -> Error', error.message))
 
     res.json(order)
   } catch (error) {

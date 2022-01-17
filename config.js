@@ -18,7 +18,9 @@ const config = {
 
   ADMIN_EMAIL: process.env.ADMIN_EMAIL,
   SUPPORT_EMAIL: process.env.SUPPORT_EMAIL,
-  SUPPORT_PHONE_NUMBER: process.env.SUPPORT_PHONE_NUMBER
+  SUPPORT_PHONE_NUMBER: process.env.SUPPORT_PHONE_NUMBER,
+
+  GG_ANALYTICS_ID: process.env.GG_ANALYTICS_ID
 }
 
 module.exports = config

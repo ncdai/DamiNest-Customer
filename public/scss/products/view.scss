@@ -21,22 +21,19 @@
       border-top-left-radius: $borderRadius;
       border-top-right-radius: $borderRadius;
       overflow: hidden;
+      background-color: #eee;
 
-      .featured-image-img {
-        position: absolute;
-        top: 0;
-        left: 0;
+      img {
         width: 100%;
         height: 100%;
-        background-color: #eee;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
+        min-height: 200px;
+        object-fit: cover;
+        object-position: center center;
         transition: all 0.5s ease;
       }
 
       &:hover {
-        .featured-image-img {
+        img {
           transform: scale(1.1);
         }
       }

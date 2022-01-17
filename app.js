@@ -13,7 +13,7 @@ const appLocals = require('./app.locals')
 const boom = require('express-boom')
 
 const { passportMiddleware, authMiddleware } = require('./middlewares')
-const { databaseUtil } = require('./utils')
+const { databaseUtil, commonUtil } = require('./utils')
 
 const {
   aboutRouter,
@@ -79,6 +79,8 @@ app.use((req, res, next) => {
   res.locals.queryString = queryString
   res.locals.searchKeyword = req.query?.keyword || ''
   res.locals.currentUrl = req.originalUrl
+  res.locals.getMediaUrl = commonUtil.getMediaUrl
+  res.locals.GG_ANALYTICS_ID = config.GG_ANALYTICS_ID
   next()
 })
 

@@ -1,7 +1,7 @@
 <div class="product-item">
   <a href="/products/<%= product._id %>">
     <div class="featured-image">
-      <div class="featured-image-img" style="background-image: url('/images/product/HH11.jpg')"></div>
+      <img src="<%= getMediaUrl(product.featuredImage) %>" alt="<%= product.name %>" />
     </div>
   </a>
 

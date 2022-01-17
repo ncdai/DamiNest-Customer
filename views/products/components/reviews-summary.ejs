@@ -4,7 +4,7 @@
       <div class="rs-box rs-overall">
         <span class="rs-overall-label">Đánh giá trung bình</span>
 
-        <span class="rs-overall-avg"><%= ratingAvg %>/5</span>
+        <span class="rs-overall-avg"><%= ratingAvg?.toFixed?.(1) %>/5</span>
 
         <%- include(views + "/products/components/rating-stars", {
           totalRatings: 10,

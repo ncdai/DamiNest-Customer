@@ -2,8 +2,8 @@
   <div class="container">
     <h2 class="heading">Yến Sào Sạch & Chất Lượng Cao</h2>
 
-    <div class="row gx-3">
-      <% products.slice(0, 3).forEach(function(product) { %>
+    <div class="row gx-3 gy-3">
+      <% products.slice(0, 6).forEach(function(product) { %>
         <div class="col-12 col-md-4">
           <%- include(views + '/products/components/product-item', { product }); %>
         </div>
