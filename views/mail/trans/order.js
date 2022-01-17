@@ -12,7 +12,7 @@ module.exports = {
       PROCESSING: 'Đang xử lí',
       TRANSFERRING: 'Đang vận chuyển',
       DONE: 'Giao hàng và thanh toán thành công',
-      REJECT: 'Đã hủy do {{reasons}}'
+      REJECTED: 'Đã hủy do {{reasons}}'
     },
 
     pending: {
