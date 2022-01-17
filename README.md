@@ -24,10 +24,13 @@ MAILGUN_DOMAIN=
 PUBLIC_WEB_CUSTOMER_URL=http://localhost:8000
 PUBLIC_WEB_ADMIN_URL=http://localhost:8888
 INTERNAL_WEB_CUSTOMER_URL=http://localhost:8000
+MEDIA_URL=http://localhost:8000
 
 ADMIN_EMAIL=ncdai@penphy.edu.vn
 SUPPORT_EMAIL=support@daminest.penphy.com
 SUPPORT_PHONE_NUMBER=0123 456 789
+
+GG_ANALYTICS_ID='G-R6JLWTLJ6N'
 ```
 
 ## Run

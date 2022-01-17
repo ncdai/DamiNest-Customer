@@ -19,6 +19,14 @@ function currencyFormatter (value) {
   }).format(value);
 }
 
+function getMediaUrl (path = '') {
+  if (path.includes('https://') || path.includes('http://')) {
+    return path
+  }
+
+  return window.__env__.MEDIA_URL + path
+}
+
 function getRatingStarsHTML ({ totalRatings, ratingAvg, hideAvgAndTotal }) {
   const totalStar = 5;
   const starPercent = (ratingAvg / totalStar) * 100;

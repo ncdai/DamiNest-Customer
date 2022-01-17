@@ -25,7 +25,7 @@ const getMediaUrl = (path = '') => {
     return path
   }
 
-  return config.PUBLIC_WEB_CUSTOMER_URL + path
+  return config.MEDIA_URL + path
 }
 
 module.exports = {

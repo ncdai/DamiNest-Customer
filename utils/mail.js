@@ -5,14 +5,12 @@ const dayjs = require('dayjs')
 const config = require('../config')
 const trans = require('../views/mail/trans')
 const currencyFormatter = require('./currency')
+const { getMediaUrl, getWebAdminUrl, getWebCustomerUrl } = require('./common')
 
 const mailgun = require('mailgun-js')({
   apiKey: config.MAILGUN_API_KEY,
   domain: config.MAILGUN_DOMAIN
 })
-
-const getWebAdminUrl = (path = '') => config.PUBLIC_WEB_ADMIN_URL + path
-const getWebCustomerUrl = (path = '') => config.PUBLIC_WEB_CUSTOMER_URL + path
 
 const dateFormatter = (date) => {
   return dayjs(date).format('H:mm:ss DD/MM/YYYY')
@@ -34,6 +32,7 @@ const htmlGenerator = async ({
     dateFormatter,
     getWebAdminUrl,
     getWebCustomerUrl,
+    getMediaUrl,
 
     SUPPORT_EMAIL: config.SUPPORT_EMAIL,
     SUPPORT_PHONE_NUMBER: config.SUPPORT_PHONE_NUMBER,

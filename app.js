@@ -81,6 +81,7 @@ app.use((req, res, next) => {
   res.locals.currentUrl = req.originalUrl
   res.locals.getMediaUrl = commonUtil.getMediaUrl
   res.locals.GG_ANALYTICS_ID = config.GG_ANALYTICS_ID
+  res.locals.MEDIA_URL = config.MEDIA_URL
   next()
 })
 
