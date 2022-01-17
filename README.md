@@ -31,6 +31,9 @@ SUPPORT_EMAIL=support@daminest.penphy.com
 SUPPORT_PHONE_NUMBER=0123 456 789
 
 GG_ANALYTICS_ID='G-R6JLWTLJ6N'
+
+# TimeZone
+TZ=Asia/Ho_Chi_Minh
 ```
 
 ## Run

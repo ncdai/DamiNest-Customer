@@ -28,6 +28,7 @@ const {
   mailRouter
   // dataRouter
 } = require('./routes')
+const dayjs = require('dayjs')
 
 const app = express()
 
@@ -113,5 +114,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500)
   res.render('error/index')
 })
+
+console.log('date', dayjs().format('HH:mm DD/MM/YYYY'))
 
 module.exports = app
