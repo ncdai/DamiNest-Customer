@@ -26,6 +26,7 @@ const {
   productReviewRouter,
   ordersRouter,
   mailRouter
+  // dataRouter
 } = require('./routes')
 
 const app = express()
@@ -91,6 +92,7 @@ app.use('/checkout', checkoutRouter)
 app.use('/product-review', productReviewRouter)
 app.use('/orders', ordersRouter)
 app.use('/mail-service', mailRouter)
+// app.use('/data', dataRouter)
 app.use('/', homeRouter)
 
 // catch 404 and forward to error handler

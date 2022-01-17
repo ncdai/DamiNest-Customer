@@ -8,6 +8,7 @@ const checkoutRouter = require('./checkout')
 const productReviewRouter = require('./productReview')
 const ordersRouter = require('./orders')
 const mailRouter = require('./mail')
+const dataRouter = require('./data')
 
 module.exports = {
   aboutRouter,
@@ -19,5 +20,6 @@ module.exports = {
   checkoutRouter,
   productReviewRouter,
   ordersRouter,
-  mailRouter
+  mailRouter,
+  dataRouter
 }
