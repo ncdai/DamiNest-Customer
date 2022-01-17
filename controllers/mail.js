@@ -1,8 +1,8 @@
 const config = require('../config')
-const { OrderModel, ProductReviewModel } = require('../models')
+const { OrderModel, ProductReviewModel, UserModel } = require('../models')
 
 const { mailUtil, currencyUtil } = require('../utils')
-const trans = require('../views/email/locales')
+const trans = require('../views/mail/trans')
 
 const sendOrderEmail = async (req, res) => {
   const { orderId } = req.params
@@ -30,8 +30,8 @@ const sendOrderEmail = async (req, res) => {
     })
     await mailUtil.sendMail({
       to: order.email,
-      title: trans('vi')('order.order.pending.title', { orderId: order._id }),
-      description: trans('vi')('order.order.pending.description', { total: currencyUtil.format(order.total) }),
+      title: trans('order.order.pending.title', { orderId: order._id }),
+      description: trans('order.order.pending.description', { total: currencyUtil.format(order.total) }),
       html
     })
     res.send(html)
@@ -48,8 +48,8 @@ const sendOrderEmail = async (req, res) => {
     })
     await mailUtil.sendMail({
       to: order.email,
-      title: trans('vi')('order.order.processing.title', { orderId: order._id }),
-      description: trans('vi')('order.order.processing.description'),
+      title: trans('order.order.processing.title', { orderId: order._id }),
+      description: trans('order.order.processing.description'),
       html
     })
     res.send(html)
@@ -66,8 +66,8 @@ const sendOrderEmail = async (req, res) => {
     })
     await mailUtil.sendMail({
       to: order.email,
-      title: trans('vi')('order.order.transferring.title', { orderId: order._id }),
-      description: trans('vi')('order.order.transferring.description'),
+      title: trans('order.order.transferring.title', { orderId: order._id }),
+      description: trans('order.order.transferring.description'),
       html
     })
     res.send(html)
@@ -84,8 +84,8 @@ const sendOrderEmail = async (req, res) => {
     })
     await mailUtil.sendMail({
       to: order.email,
-      title: trans('vi')('order.order.done.title', { orderId: order._id }),
-      description: trans('vi')('order.order.done.description'),
+      title: trans('order.order.done.title', { orderId: order._id }),
+      description: trans('order.order.done.description'),
       html
     })
     res.send(html)
@@ -102,8 +102,8 @@ const sendOrderEmail = async (req, res) => {
     })
     await mailUtil.sendMail({
       to: order.email,
-      title: trans('vi')('order.order.reject.title', { orderId: order._id }),
-      description: trans('vi')('order.order.reject.description', { reasons: order.reasonsForRejection }),
+      title: trans('order.order.reject.title', { orderId: order._id }),
+      description: trans('order.order.reject.description', { reasons: order.reasonsForRejection }),
       html
     })
     res.send(html)
@@ -140,8 +140,8 @@ const sendProductReviewEmail = async (req, res) => {
     })
     await mailUtil.sendMail({
       to: config.ADMIN_EMAIL,
-      title: `${review.fullName} vừa nhận xét sản phẩm ${review.productName}`,
-      description: 'Vui lòng xem đánh giá và tiến hành kiểm duyệt.',
+      title: trans('review.toAdmin.title', { fullName: review.fullName, productName: review.productName }),
+      description: trans('review.toAdmin.description'),
       html
     })
     res.send(html)
@@ -158,8 +158,8 @@ const sendProductReviewEmail = async (req, res) => {
     })
     await mailUtil.sendMail({
       to: review.email,
-      title: 'Nhận xét của bạn đã được đăng!',
-      description: 'Nhận xét của bạn đã được đăng!',
+      title: trans('review.toOwner.title'),
+      description: trans('review.toOwner.description'),
       html
     })
     res.send(html)
@@ -171,7 +171,75 @@ const sendProductReviewEmail = async (req, res) => {
   })
 }
 
+const sendVerifyEmail = async (req, res) => {
+  const { userId } = req.params
+  const { token, secretKey } = req.query
+
+  if (secretKey !== config.SECRET_KEY) {
+    res.boom.unauthorized()
+    return
+  }
+
+  const user = await UserModel.findById(userId).exec()
+
+  if (!user) {
+    res.boom.notFound('Tài khoản không tồn tại.')
+    return
+  }
+
+  const html = await mailUtil.htmlGenerator({
+    template: 'auth/verify-email',
+    useLanguageSuffix: true,
+    params: {
+      fullName: user.fullName,
+      actionUrl: `/auth/verify-email?token=${token}`
+    }
+  })
+  await mailUtil.sendMail({
+    to: user.email,
+    title: trans('auth.verifyEmail.title'),
+    description: trans('auth.verifyEmail.description'),
+    html
+  })
+  res.send(html)
+}
+
+const resetPassword = async (req, res) => {
+  const { userId } = req.params
+  const { token, secretKey } = req.query
+
+  if (secretKey !== config.SECRET_KEY) {
+    res.boom.unauthorized()
+    return
+  }
+
+  const user = await UserModel.findById(userId).exec()
+
+  if (!user) {
+    res.boom.notFound('Tài khoản không tồn tại.')
+    return
+  }
+
+  const html = await mailUtil.htmlGenerator({
+    template: 'auth/reset-password',
+    useLanguageSuffix: true,
+    params: {
+      fullName: 'Nguyễn Chánh Đại',
+      actionUrl: `/auth/reset-password?token=${token}`
+    }
+  })
+  await mailUtil.sendMail({
+    to: user.email,
+    title: trans('auth.resetPassword.title'),
+    description: trans('auth.resetPassword.description'),
+    html
+  })
+  res.send(html)
+}
+
 module.exports = {
   sendOrderEmail,
-  sendProductReviewEmail
+  sendProductReviewEmail,
+  sendVerifyEmail,
+  resetPassword
 }

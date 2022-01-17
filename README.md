@@ -20,6 +20,13 @@ PORT=3000
 
 MAILGUN_API_KEY=
 MAILGUN_DOMAIN=
+
+PUBLIC_WEB_CUSTOMER_URL=http://localhost:8000
+PUBLIC_WEB_ADMIN_URL=http://localhost:8888
+
+ADMIN_EMAIL=ncdai@penphy.edu.vn
+SUPPORT_EMAIL=support@daminest.penphy.com
+SUPPORT_PHONE_NUMBER=0123 456 789
 ```
 
 ## Run

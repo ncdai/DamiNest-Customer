@@ -1,9 +1,9 @@
 const path = require('path')
 const ejs = require('ejs-promise')
-const trans = require('../views/email/locales')
+const dayjs = require('dayjs')
 
 const config = require('../config')
-const dayjs = require('dayjs')
+const trans = require('../views/mail/trans')
 const currencyFormatter = require('./currency')
 
 const mailgun = require('mailgun-js')({
@@ -11,38 +11,33 @@ const mailgun = require('mailgun-js')({
   domain: config.MAILGUN_DOMAIN
 })
 
-const ejsDateFormatter = (date) => {
+const getWebAdminUrl = (path = '') => config.PUBLIC_WEB_ADMIN_URL + path
+const getWebCustomerUrl = (path = '') => config.PUBLIC_WEB_CUSTOMER_URL + path
+
+const dateFormatter = (date) => {
   return dayjs(date).format('H:mm:ss DD/MM/YYYY')
 }
 
 const htmlGenerator = async ({
   template,
-  // Ngôn ngữ của template
-  language = 'vi',
-  // Tự động thêm hậu tố ngôn ngữ vào file template
-  // VD : template = "order/to-admin" ; language = "vi"
-  // => Render File : "PATH/order/to-admin.vi.ejs"
-  useLanguageSuffix = false,
   params
 }) => {
-  let file
-  if (useLanguageSuffix) {
-    file = path.join(__dirname, `../views/email/${template}.${language}.ejs`)
-  } else {
-    file = path.join(__dirname, `../views/email/${template}.ejs`)
-  }
+  const file = path.join(__dirname, `../views/mail/${template}.ejs`)
 
   if (!file) {
     throw new Error(`Could not find the ${template} in path ${file}`)
   }
 
   const defaultParams = {
+    trans,
     currencyFormatter: currencyFormatter.format,
-    dateFormatter: ejsDateFormatter,
-    language,
-    trans: trans(language),
+    dateFormatter,
+    getWebAdminUrl,
+    getWebCustomerUrl,
+
     SUPPORT_EMAIL: config.SUPPORT_EMAIL,
     SUPPORT_PHONE_NUMBER: config.SUPPORT_PHONE_NUMBER,
+
     ...params
   }
 
@@ -50,10 +45,10 @@ const htmlGenerator = async ({
     if (error) {
       return error
     }
+
     return result
-      .then(function (data) {
-        return data
-      }).catch((error) => {
+      .then((data) => data)
+      .catch((error) => {
         throw error
       })
   })
@@ -61,7 +56,13 @@ const htmlGenerator = async ({
   return res
 }
 
-const sendMail = ({ from = 'DamiNest Support', to, title, description, html }) => {
+const sendMail = ({
+  from = 'DamiNest Support',
+  to,
+  title,
+  description,
+  html
+}) => {
   const data = {
     from: `${from} <daminest@mg.penphy.com>`,
     to,

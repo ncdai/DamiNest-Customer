@@ -1,9 +1,9 @@
 <%- include('../layout/header') -%>
 
-<p class="hello">Cảm ơn quý khách <%= order.fullName %> đã đặt hàng tại Yến Sào DamiNest,</p>
+<p class="hello">Cảm ơn quý khách <%= order?.fullName %> đã đặt hàng tại Yến Sào DamiNest,</p>
 
 <p>
-  Yến Sào DamiNest rất vui thông báo đơn hàng <strong>#<%= order._id %></strong> của quý khách đã được tiếp nhận và đang trong quá trình xử lý.
+  Yến Sào DamiNest rất vui thông báo đơn hàng <strong>#<%= order?._id %></strong> của quý khách đã được tiếp nhận và đang trong quá trình xử lý.
 </p>
 
 <p>

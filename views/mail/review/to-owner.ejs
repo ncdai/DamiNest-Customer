@@ -1,9 +1,9 @@
 <%- include('../layout/header') -%>
 
-<p class="hello">Chào quý khách <%= review.fullName %>,</p>
+<p class="hello">Chào quý khách <%= review?.fullName %>,</p>
 
 <p>
-  Nhận xét sản phẩm <a href="#" target="_blank" style="color: #841206"><strong><%= review.productName %></strong></a> của bạn đã được đăng trên website <a href="https://daminest.penphy.com" style="color: #000;"><strong>daminest.penphy.com</strong></a>!
+  Nhận xét sản phẩm <a href="#" target="_blank" style="color: #841206"><strong><%= review?.productName %></strong></a> của bạn đã được đăng trên website <a href="https://daminest.penphy.com" style="color: #000;"><strong>daminest.penphy.com</strong></a>!
 </p>
 
 <p>Bạn có thể xem lại nhận xét của mình <a href="#" target="_blank" style="color: #841206"><strong>tại đây</strong></a>.</p>
