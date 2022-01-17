@@ -29,11 +29,11 @@ const getProducts = async ({ page, categoryId, sort } = {}) => {
 }
 
 const index = async (req, res) => {
-  const { page, categoryId, sort } = req.query
+  const { page, categoryId } = req.query
 
   const [categoriesRes, productsRes] = await Promise.all([
     ProductCategoryModel.find(),
-    getProducts({ page, categoryId, sort })
+    getProducts({ page, categoryId, sort: 'updatedAt:desc' })
   ])
 
   const {

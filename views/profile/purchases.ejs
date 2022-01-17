@@ -1,3 +1,13 @@
+<%
+  const statusMessage = {
+    PENDING: 'Đang chờ xác nhận',
+    PROCESSING: 'Đang xử lí',
+    TRANSFERRING: 'Đang vận chuyển',
+    DONE: 'Giao hàng và thanh toán thành công',
+    REJECTED: 'Đã hủy'
+  }
+%>
+
 <!doctype html>
 <html lang="vi">
 
@@ -51,7 +61,7 @@
                         </td>
 
                         <td><%= currencyFormatter.format(order.total) %></td>
-                        <td><%= order.status %></td>
+                        <td><%= statusMessage?.[order.status] || "Unknown" %></td>
                       </tr>
                     <% }) %>
                   </tbody>

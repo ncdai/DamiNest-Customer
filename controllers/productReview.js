@@ -1,5 +1,8 @@
 const _ = require('lodash')
+const config = require('../config')
 const { ProductModel, ProductReviewModel, OrderModel } = require('../models')
+const { commonUtil } = require('../utils')
+const axios = require('axios').default
 
 const postCheckCanReview = async (req, res) => {
   try {
@@ -61,6 +64,12 @@ const postReview = async (req, res) => {
     })
 
     const newReview = await review.save()
+
+    const requestUrl = commonUtil.getInternalWebCustomerUrl(`/mail-service/product-review/${newReview._id}?to=admin&secretKey=${config.SECRET_KEY}`)
+    axios
+      .get(requestUrl)
+      .then((res) => console.log('sendReviewEmailToAdmin -> Success'))
+      .catch((error) => console.log('sendReviewEmailToAdmin -> Error', error.message))
 
     res.json(newReview)
   } catch (error) {

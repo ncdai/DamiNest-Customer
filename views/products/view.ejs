@@ -245,9 +245,9 @@
               "Thông báo",
               "Bạn cần đăng nhập để đánh giá sản phẩm này.",
               function () {
-                // onOk
                 window.location = '/auth/login?nextUrl=<%= currentUrl %>';
-              }
+              },
+              function () {}
             )
             .set('labels',{ ok: 'Đăng nhập', cancel: 'Đóng' });
           return;

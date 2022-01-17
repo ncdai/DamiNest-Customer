@@ -8,12 +8,13 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const mongoose = require('mongoose')
 const queryString = require('query-string')
-const config = require('./config')
-const appLocals = require('./app.locals')
 const boom = require('express-boom')
 
 const { passportMiddleware, authMiddleware } = require('./middlewares')
-const { databaseUtil, commonUtil } = require('./utils')
+const { databaseUtil, commonUtil, currencyUtil } = require('./utils')
+
+const config = require('./config')
+const appLocals = require('./app.locals')
 
 const {
   aboutRouter,
@@ -28,7 +29,6 @@ const {
   mailRouter
   // dataRouter
 } = require('./routes')
-const dayjs = require('dayjs')
 
 const app = express()
 
@@ -73,10 +73,7 @@ app.use(passport.session())
 app.use(passportMiddleware.injectLocals())
 
 app.use((req, res, next) => {
-  res.locals.currencyFormatter = new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND'
-  })
+  res.locals.currencyFormatter = currencyUtil
   res.locals.queryString = queryString
   res.locals.searchKeyword = req.query?.keyword || ''
   res.locals.currentUrl = req.originalUrl
@@ -114,7 +111,5 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500)
   res.render('error/index')
 })
-
-console.log('date', dayjs().format('HH:mm DD/MM/YYYY'))
 
 module.exports = app
