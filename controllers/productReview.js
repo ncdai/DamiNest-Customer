@@ -8,7 +8,7 @@ const postCheckCanReview = async (req, res) => {
   try {
     const { userId, productId } = req.body
 
-    const order = await OrderModel.findOne({ ownerId: userId, 'products.productId': productId }).exec()
+    const order = await OrderModel.findOne({ ownerId: userId, 'products.productId': productId, status: 'DONE' }).exec()
     if (!order) {
       res.json({
         canReview: false,

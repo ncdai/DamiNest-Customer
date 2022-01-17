@@ -27,6 +27,12 @@ function getMediaUrl (path = '') {
   return window.__env__.MEDIA_URL + path
 }
 
+function scrollToElement (element, offset = 56) {
+  $('html,body').animate({
+    scrollTop: $(element).offset().top - offset
+  }, 'slow');
+}
+
 function getRatingStarsHTML ({ totalRatings, ratingAvg, hideAvgAndTotal }) {
   const totalStar = 5;
   const starPercent = (ratingAvg / totalStar) * 100;

@@ -152,7 +152,7 @@ const getView = async (req, res, next) => {
     ProductModel.findByIdAndUpdate(productId, { $inc: { totalViews: 1 } }).exec()
   ])
 
-  res.render('products/view', { product, relatedProducts })
+  res.render('products/view', { product, relatedProducts, isReview: req.query?.review === 'true' })
 }
 
 const getReviews = async (req, res) => {

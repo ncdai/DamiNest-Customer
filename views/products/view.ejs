@@ -113,7 +113,7 @@
         </div>
       </div>
 
-      <div class="section">
+      <div class="section" id="section-reviews">
         <h3 class="heading">
           Khách hàng nhận xét
           <span></span>
@@ -437,7 +437,13 @@
         callback: function(data, pagination) {
           renderReviews(data);
         }
-      })
+      });
+
+      const isReview = "<%= isReview %>";
+      if (isReview === "true") {
+        scrollToElement('#section-reviews', 88);
+        $('#btn-write-review').click();
+      }
     });
   </script>
 </body>
