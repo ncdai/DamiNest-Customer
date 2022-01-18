@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <%- include(layouts + '/head'); %>
+
+  <link rel="stylesheet" href="/css/contact/index.css">
+</head>
+
+<body id="contact-page">
+  <%- include(layouts + '/header'); %>
+
+  <main class="contact-hero-unit">
+    <div class="info">
+      <h2>Thông tin liên hệ</h2>
+
+      <div class="item address">
+        <i class="fas fa-home"></i>
+        <span>
+          KTX Khu B - ĐHQG HCM, Linh Trung, Thủ Đức, HCM
+        </span>
+      </div>
+
+      <div class="item phoneNumber">
+        <i class="fas fa-phone"></i>
+        <a href="tel:0777888148">
+          0777 888 148
+        </a>
+      </div>
+
+      <div class="item website">
+        <i class="fas fa-link"></i>
+        <a href="https://daminest.penphy.com">
+          https://daminest.penphy.com
+        </a>
+      </div>
+
+      <div class="item email">
+        <i class="fas fa-envelope"></i>
+        <a href="mailto:contact@daminest.penphy.com">
+          contact@daminest.penphy.com
+        </a>
+      </div>
+    </div>
+
+    <iframe
+      class="map"
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.052636653143!2d106.77932541538887!3d10.883601192248857!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d89aad780e49%3A0x54542761d4c22175!2sHCMC%20National%20University%20Dormitory%20-%20Zone%20B!5e0!3m2!1sen!2s!4v1642464566090!5m2!1sen!2s"
+      width="100%"
+      frameBorder="0"
+      style="border-width: 0"
+      allowFullScreen
+    ></iframe>
+  </main>
+
+  <%- include(layouts + '/footer'); %>
+  <%- include(layouts + '/foot'); %>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#navPrimary [itemid="contact"]').addClass('active');
+    });
+  </script>
+</body>
+
+</html>

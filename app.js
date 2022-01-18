@@ -26,7 +26,8 @@ const {
   checkoutRouter,
   productReviewRouter,
   ordersRouter,
-  mailRouter
+  mailRouter,
+  contactRouter
   // dataRouter
 } = require('./routes')
 
@@ -93,6 +94,7 @@ app.use('/checkout', checkoutRouter)
 app.use('/product-review', productReviewRouter)
 app.use('/orders', ordersRouter)
 app.use('/mail-service', mailRouter)
+app.use('/contact', contactRouter)
 // app.use('/data', dataRouter)
 app.use('/', homeRouter)
 

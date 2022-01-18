@@ -11,6 +11,7 @@ const checkoutController = require('./checkout')
 const productReviewController = require('./productReview')
 const mailController = require('./mail')
 const dataController = require('./data')
+const contactController = require('./contact')
 
 module.exports = {
   aboutController,
@@ -25,5 +26,6 @@ module.exports = {
   checkoutController,
   productReviewController,
   mailController,
-  dataController
+  dataController,
+  contactController
 }
