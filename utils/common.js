@@ -17,6 +17,7 @@ const convertSortQueryStringToMongooseSort = (st) => {
 }
 
 const getWebAdminUrl = (path = '') => config.PUBLIC_WEB_ADMIN_URL + path
+
 const getWebCustomerUrl = (path = '') => config.PUBLIC_WEB_CUSTOMER_URL + path
 
 const getInternalWebCustomerUrl = (path = '') => config.INTERNAL_WEB_CUSTOMER_URL + path
@@ -28,12 +29,13 @@ const getMediaUrl = (path = '') => {
   return config.MEDIA_URL + path
 }
 
+const getPageTitle = (title = '') => title ? `${title} | ${config.APP_NAME}` : config.APP_NAME
+
 module.exports = {
   convertSortQueryStringToMongooseSort,
-
   getWebAdminUrl,
   getWebCustomerUrl,
-
   getInternalWebCustomerUrl,
-  getMediaUrl
+  getMediaUrl,
+  getPageTitle
 }

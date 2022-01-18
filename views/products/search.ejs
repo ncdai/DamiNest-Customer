@@ -23,7 +23,7 @@
 <html lang="vi">
 
 <head>
-  <%- include(layouts + '/head'); %>
+  <%- include(layouts + '/head', { pageTitle: formValues?.keyword ? `'${formValues?.keyword}' | Tìm kiếm` : "Tìm kiếm" }); %>
 
   <link rel="stylesheet" href="/css/products/index.css">
   <link rel="stylesheet" href="/css/products/search.css">

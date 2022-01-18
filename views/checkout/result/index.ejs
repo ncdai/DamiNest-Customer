@@ -2,7 +2,7 @@
 <html lang="vi">
 
 <head>
-  <%- include(layouts + '/head'); %>
+  <%- include(layouts + '/head', { pageTitle: orderSuccess ? "Đặt hàng thành công" : "Đặt hàng không thành công" }); %>
 
   <link rel="stylesheet" href="/fonts/FontAwesomePro/css/regular.min.css">
   <link rel="stylesheet" href="/css/checkout/layout.css">

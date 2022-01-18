@@ -3,6 +3,8 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 const config = {
+  APP_NAME: 'Yến Sào DamiNest - Yến Sào Sạch & Chất Lượng Cao',
+
   ENV: process.env.NODE_ENV,
   PORT: process.env.PORT,
   MONGODB_URL: process.env.MONGODB_URL,
