@@ -30,7 +30,7 @@ ADMIN_EMAIL=ncdai@penphy.edu.vn
 SUPPORT_EMAIL=support@daminest.penphy.com
 SUPPORT_PHONE_NUMBER=0123 456 789
 
-GG_ANALYTICS_ID='G-R6JLWTLJ6N'
+GG_ANALYTICS_ID='G-XXXXXXXXXX'
 
 # TimeZone
 TZ=Asia/Ho_Chi_Minh
